@@ -8,28 +8,29 @@ private:
 
 	std::vector <std::string> headers;
 
-	std::vector <int> scheme_prog_code;
-	std::vector <std::string> prog_name;
-	std::vector <int> scheme_id;
-	std::vector <std::string> prog_sem_year;
-	std::vector <std::string> prepared_date;
-	std::vector <std::string> declared_date;
-	std::vector <int> institution_code;
-	std::vector <std::string> institution_name;
-	std::vector <int> s_number;
-	std::vector <int> paper_id;
-	std::vector <std::string> paper_code;
-	std::vector <std::string> subject_name;
-	std::vector <int> credits;
-	std::vector <std::string> type;
-	std::vector <std::string> exam;
-	std::vector <std::string> mode;
-	std::vector <std::string> kind;
-	std::vector <std::string> minor;
-	std::vector <std::string> major;
-	std::vector <std::string> max_marks;
-	std::vector <std::string> pass_marks;
+	int * scheme_prog_code;
+	std::string * prog_name;
+	int * scheme_id;
+	std::string * prog_sem_year;
+	std::string * prepared_date;
+	std::string * declared_date;
+	int * institution_code;
+	std::string * institution_name;
+	int * s_number;
+	int * paper_id;
+	std::string * paper_code;
+	std::string * subject_name;
+	int * credits;
+	std::string * type;
+	std::string * exam;
+	std::string * mode;
+	std::string * kind;
+	std::string * minor;
+	std::string * major;
+	std::string * max_marks;
+	std::string * pass_marks;
 
+	size_t rows;
 
 	bool readFileToBuffer(std::string filePath, std::vector<unsigned char>& buffer);
 	
