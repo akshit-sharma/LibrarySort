@@ -4,31 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <iomanip>
-
-
-
-
-int main(int argc, char ** argv)
-{
-	
-	if(argc != 2)
-	{
-		perror("Invalid parameter given");
-		perror("argv[1] not supplied");
-		exit(1);
-	}
-
-	const char * file_name = argv[1];
-
-	Source source;
-	source.readFile(file_name);
-
-	source.print_table();
-
-	return 0;
-
-}
-
+#include <algorithm>
 
 void Source::readFile(const char* file_name)
 {
@@ -202,28 +178,33 @@ bool Source::readFileToBuffer(std::string filePath,
 	return true;
 }
 
-void Source::print_table()
+void Source::print_table(const char * file_name)
 {
 
+	FILE * p_file;
+	
+	fopen_s(&p_file, file_name, "w");
 
 	std::vector<std::string>::iterator iter;
 	for (iter = headers.begin();
 		iter != headers.end(); ++iter){
 		if (iter != headers.begin())
-			fprintf_s(stdout, ",");
-		fprintf_s(stdout,"%s",(*iter).c_str());
+			fprintf_s(p_file, ",");
+		fprintf_s(p_file,"%s",(*iter).c_str());
 	}
 
-	fprintf_s(stdout,"\n");
+	fprintf_s(p_file,"\n");
 
 	for (size_t i = 0; i < rows; i++)
 	{
-		fprintf_s(stdout, "%d,%s,%d,%s,%s,%s,%d,%s,%d,%d,%s,%s,%d,%s,%s,%s,%s,%s,%s,%s,%s\n",
+		fprintf_s(p_file, "%d,%s,%d,%s,%s,%s,%d,%s,%d,%d,%s,%s,%d,%s,%s,%s,%s,%s,%s,%s,%s\n",
 			scheme_prog_code[i], prog_name[i].c_str(), scheme_id[i], prog_sem_year[i].c_str(),
 			prepared_date[i].c_str(), declared_date[i].c_str(), institution_code[i], institution_name[i].c_str(), s_number[i],
 			paper_id[i], paper_code[i].c_str(), subject_name[i].c_str(), credits[i], type[i].c_str(), exam[i].c_str(), mode[i].c_str(), kind[i].c_str(), minor[i].c_str(), major[i].c_str(), max_marks[i].c_str(), pass_marks[i].c_str());
 				
 	}
+
+	fclose(p_file);
 
 }
 
@@ -286,5 +267,47 @@ Source::~Source()
 	delete [] (max_marks);
 	delete [] (pass_marks);
 
+}
+
+void Source::sort(int column)
+{
+	quicksort(paper_id, 0, rows - 1);
+}
+
+void Source::quicksort(int* toSort, size_t low, size_t high)
+{
+	if(low<high)
+	{
+		size_t part = partition(toSort, low, high);
+
+		quicksort(toSort, low, part - 1);
+		quicksort(toSort, part + 1, high);
+	}
+}
+
+size_t Source::partition(int* toSort, size_t low, size_t high)
+{
+	int pivot = toSort[high];
+
+	size_t i = low;
+
+	for (size_t j = low + 1; j <= high - 1; j++)
+	{
+		if(toSort[j] <= pivot)
+		{
+			i++;
+			swap(toSort, i, j);
+		}
+	}
+	swap(toSort, i+1, high);
+	return (i+1);
+}
+
+
+void Source::swap(int* toSwap, size_t index_1, size_t index_2)
+{
+	int temp = toSwap[index_1];
+	toSwap[index_1] = toSwap[index_2];
+	toSwap[index_2] = temp;
 }
 

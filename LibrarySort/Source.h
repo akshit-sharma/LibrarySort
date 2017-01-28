@@ -30,14 +30,23 @@ private:
 	std::string * max_marks;
 	std::string * pass_marks;
 
+	enum type
+	{
+		inte, string
+	};
+
 	size_t rows;
 
 	bool readFileToBuffer(std::string filePath, std::vector<unsigned char>& buffer);
-	
+	void quicksort(int * toSort, size_t low, size_t high);
+	size_t partition(int * toSort, size_t low, size_t high);
+	void swap(int * toSwap, size_t index_1, size_t index_2);
+
 public:
 	Source();
 	void readFile(const char * file_name);
-	void print_table();
+	void sort(int column);
+	void print_table(const char * file_name);
 	~Source();
 };
 
