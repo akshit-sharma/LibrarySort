@@ -309,7 +309,7 @@ void Source::swap(size_t index_1, size_t index_2)
 	int temp = paper_id[index_1];
 	paper_id[index_1] = paper_id[index_2];
 	paper_id[index_2] = temp;
-//
+
 //	temp = scheme_prog_code[index_1];
 //	scheme_prog_code[index_1] = scheme_prog_code[index_2];
 //	scheme_prog_code[index_2] = temp;
@@ -328,6 +328,12 @@ void Source::swap(size_t index_1, size_t index_2)
 
 	std::string t_string;
 
+	t_string = paper_code[index_1];
+	paper_code[index_1] = paper_code[index_2];
+	paper_code[index_2] = t_string;
+
+
+
 //	t_string = prog_name[index_1];
 //	prog_name[index_1] = prog_name[index_2];
 //	prog_name[index_2] = t_string;
@@ -344,10 +350,6 @@ void Source::swap(size_t index_1, size_t index_2)
 //	institution_name[index_1] = institution_name[index_2];
 //	institution_name[index_2] = t_string;
 //
-	t_string = paper_code[index_1];
-	paper_code[index_1] = paper_code[index_2];
-	paper_code[index_2] = t_string;
-
 //	t_string = subject_name[index_1];
 //	subject_name[index_1] = subject_name[index_2];
 //	subject_name[index_2] = t_string;
