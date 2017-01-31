@@ -125,6 +125,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <StackReserveSize>1024</StackReserveSize>
+      <LargeAddressAware>true</LargeAddressAware>
+      <StackCommitSize>32</StackCommitSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,10 +146,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <StackReserveSize>1024</StackReserveSize>
+      <LargeAddressAware>true</LargeAddressAware>
+      <StackCommitSize>32</StackCommitSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BiggerSource.h" />
+    <ClInclude Include="Main.h" />
     <ClInclude Include="Source.h" />
   </ItemGroup>
   <ItemGroup>

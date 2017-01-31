@@ -1,8 +1,9 @@
 
 #include <vector>
+#include "Main.h"
 
 #pragma once
-class Source
+class Source : public virtual main_class
 {
 private:
 

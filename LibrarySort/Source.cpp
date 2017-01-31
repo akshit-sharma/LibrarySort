@@ -5,6 +5,7 @@
 #include <vector>
 #include <iomanip>
 #include <algorithm>
+#include <stack>
 
 void Source::readFile(const char* file_name)
 {
@@ -276,13 +277,37 @@ void Source::sort(int column)
 
 void Source::quicksort(int* toSort, size_t low, size_t high)
 {
-	if(low<high)
-	{
-		size_t part = partition(toSort, low, high);
 
-		quicksort(toSort, low, part - 1);
-		quicksort(toSort, part + 1, high);
+	size_t part;
+	std::stack<size_t> mini_stack;
+
+	mini_stack.push(low);
+	mini_stack.push(high);
+
+	while (mini_stack.size() > 0) {
+		size_t low;
+		size_t high;
+
+		high = mini_stack.top();
+		mini_stack.pop();
+		low = mini_stack.top();
+		mini_stack.pop();
+
+		if (low < high)
+		{
+			part = partition(toSort, low, high);
+
+			//			quicksort(toSort, low, part - 1);
+			//			quicksort(toSort, part + 1, high);
+
+			mini_stack.push(part + 1);
+			mini_stack.push(high);
+			mini_stack.push(low);
+			mini_stack.push(part - 1);
+
+		}
 	}
+
 }
 
 size_t Source::partition(int* toSort, size_t low, size_t high)

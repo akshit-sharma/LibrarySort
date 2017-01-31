@@ -5,6 +5,8 @@
 #include <iomanip>
 #include <algorithm>
 
+#include "Main.h"
+#include "BiggerSource.h"
 #include "Source.h"
 
 int main(int argc, char ** argv)
@@ -27,8 +29,11 @@ int main(int argc, char ** argv)
 
 	start = std::clock();
 
-	Source source;
-	source.readFile(file_name);
+//	Source source;
+	BiggerSource source;	
+	main_class * main_class_obj = &source;
+	main_class_obj->readFile(file_name);
+//	source.readFile(file_name);
 
 	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 	fprintf_s(stdout, "Time to read : %lf sec \n", duration);
@@ -36,7 +41,8 @@ int main(int argc, char ** argv)
 
 	start = std::clock();
 
-	source.sort(10);
+	main_class_obj->sort(10);
+//	source.sort(10);
 
 	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 	fprintf_s(stdout, "Time to sort : %lf sec \n", duration);
@@ -45,7 +51,8 @@ int main(int argc, char ** argv)
 
 	start = std::clock();
 
-	source.print_table(output_file_name);
+	main_class_obj->print_table(output_file_name);
+//	source.print_table(output_file_name);
 
 	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 	fprintf_s(stdout, "Time to print : %lf sec \n", duration);
