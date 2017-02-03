@@ -257,9 +257,7 @@ void BiggerSource::sort(int column)
 
 void BiggerSource::quicksort(std::string * toSort, size_t low, size_t high)
 {
-
-	something = 0;
-
+	
 	size_t part;
 	std::stack<size_t> mini_stack;
 
