@@ -329,9 +329,11 @@ size_t Source::partition(int* toSort, size_t low, size_t high)
 }
 
 
-void Source::swap(size_t index_1, size_t index_2)
+void Source::swap(const size_t index_1, const size_t index_2)
 {
-	int temp = paper_id[index_1];
+	int temp;
+
+	temp = paper_id[index_1];
 	paper_id[index_1] = paper_id[index_2];
 	paper_id[index_2] = temp;
 

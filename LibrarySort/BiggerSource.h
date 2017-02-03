@@ -11,23 +11,23 @@ private:
     std::vector<std::string> headers;
 
     int * scheme_prog_code;
-    char ** prepared_date;
-    char ** declared_date;
-    char ** prog_name;
-    char ** prog_sem_year;
+    std::string * prepared_date;
+    std::string * declared_date;
+    std::string * prog_name;
+    std::string * prog_sem_year;
     int * batch;
-    char ** examination;
+    std::string * examination;
     int * institution_code;
-    char ** institution_name;
+    std::string * institution_name;
     long long * rollnumber;
-    char ** name;
+    std::string * name;
     long long * sid;
     long long * result_scheme_id;
-    char ** credits;
-    char ** minor;
-    char ** major;
-    char ** total;
-
+    std::string * credits;
+    std::string * minor;
+    std::string * major;
+    std::string * total;
+	
     enum type{
         inte, string
     };
@@ -35,10 +35,10 @@ private:
     size_t rows;
 
 	bool readFileToBuffer(std::string filePath, std::vector<unsigned char>& buffer);
-	void quicksort(long long * toSort, size_t low, size_t high);
-	size_t partition(long long * toSort, size_t low, size_t high);
+	void quicksort(std::string * toSort, size_t low, size_t high);
+	size_t partition(std::string * toSort, size_t low, size_t high);
 	void swap(size_t index_1, size_t index_2);
-	void swapper( char* str1, char* str2);
+	bool compare_isLess(std::string str1, std::string str2);
 
 public:
 	BiggerSource();
