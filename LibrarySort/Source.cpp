@@ -209,7 +209,7 @@ void Source::print_table(const char * file_name)
 
 }
 
-Source::Source()
+void Source::MemAllo()
 {
 	size_t colmns = 21;
 	rows = 247472;
@@ -242,7 +242,7 @@ Source::Source()
 
 }
 
-Source::~Source()
+void Source::MemFree()
 {
 	headers.clear();
 
@@ -272,10 +272,91 @@ Source::~Source()
 
 void Source::sort(int column)
 {
-	quicksort(paper_id, 0, rows - 1);
+	if (column == 1)
+		quicksort(paper_id, 0, rows - 1);
+	if (column == 2)
+		quicksort(subject_name, 0, rows - 1);
+	if (column == 3)
+		quicksort(institution_name, 0, rows - 1);
+	if (column == 4)
+		shellsort(paper_id, 0, rows - 1);
+	if (column == 5)
+		shellsort(subject_name, 0, rows - 1);
+	if (column == 6)
+		shellsort(institution_name, 0, rows - 1);
+
+}
+
+
+void Source::shellsort(std::string * toSort, size_t low, size_t high)
+{
+	long long i, j, k;
+
+	for (i = (high + 1) / 2; i>0; i = i / 2)
+		for (j = i; j<high; j++)
+			for (k = j - i; k >= 0; k = k - i)
+			{
+				if (compare_isLess(toSort[k], toSort[k + i]))
+					break;
+				else
+					swap(k, k + i);
+			}
+
+}
+
+void Source::shellsort(int * toSort, size_t low, size_t high)
+{
+	long long i, j, k;
+
+	for (i = (high + 1) / 2; i>0; i = i / 2)
+		for (j = i; j<high; j++)
+			for (k = j - i; k >= 0; k = k - i)
+			{
+				if (toSort[k] < toSort[k + i])
+					break;
+				else
+					swap(k, k + i);
+			}
+
 }
 
 void Source::quicksort(int* toSort, size_t low, size_t high)
+{
+
+	size_t part;
+	std::stack<size_t> mini_stack;
+
+	mini_stack.push(low);
+	mini_stack.push(high);
+
+	while (mini_stack.size() > 0) {
+		size_t low;
+		size_t high;
+
+		high = mini_stack.top();
+		mini_stack.pop();
+		low = mini_stack.top();
+		mini_stack.pop();
+
+		if (low < high)
+		{
+			part = partition(toSort, low, high);
+
+			//			quicksort(toSort, low, part - 1);
+			//			quicksort(toSort, part + 1, high);
+
+			mini_stack.push(part + 1);
+			mini_stack.push(high);
+			mini_stack.push(low);
+			mini_stack.push(part - 1);
+
+		}
+	}
+
+}
+
+
+void Source::quicksort(std::string * toSort, size_t low, size_t high)
 {
 
 	size_t part;
@@ -318,14 +399,32 @@ size_t Source::partition(int* toSort, size_t low, size_t high)
 
 	for (size_t j = low + 1; j <= high - 1; j++)
 	{
-		if(toSort[j] <= pivot)
+		if (toSort[j] <= pivot)
 		{
 			i++;
 			swap(i, j);
 		}
 	}
-	swap(i+1, high);
-	return (i+1);
+	swap(i + 1, high);
+	return (i + 1);
+}
+
+size_t Source::partition(std::string * toSort, size_t low, size_t high)
+{
+	std::string pivot = toSort[high];
+
+	size_t i = low;
+
+	for (size_t j = low + 1; j <= high - 1; j++)
+	{
+		if (compare_isLess(toSort[j],pivot))
+		{
+			i++;
+			swap(i, j);
+		}
+	}
+	swap(i + 1, high);
+	return (i + 1);
 }
 
 
@@ -413,3 +512,30 @@ void Source::swap(const size_t index_1, const size_t index_2)
 
 }
 
+bool Source::compare_isLess(std::string str1, std::string str2)
+{
+	size_t i;
+	size_t min_i;
+	i = 0;
+
+	min_i = std::min(str1.length(), str2.length());
+
+	while (i<min_i)
+	{
+		if (str1[i]<str2[i])
+		{
+			return true;
+		}
+		else if (str1[i]>str2[i])
+		{
+			return false;
+		}
+		++i;
+	}
+
+	if (str1.length() > str2.length())
+		return true;
+
+	return false;
+
+}

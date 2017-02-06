@@ -107,16 +107,19 @@ void BiggerSource::readFile(const char* file_name)
                     case 12: //result_scheme_id
                         result_scheme_id[line_number-1] = (atoll(temp_var));
                         break;
-                    case 13: //credits
+					case 13:
+						paper_id[line_number - 1] = atoi(temp_var);
+						break;
+                    case 14: //credits
 						credits[line_number - 1] = temp_var;
                         break;
-                    case 14: //minor
+                    case 15: //minor
 						minor[line_number - 1] = temp_var;
                         break;
-                    case 15: //major
+                    case 16: //major
 						major[line_number - 1] = temp_var;
                         break;
-                    case 16: //total
+                    case 17: //total
 						total[line_number - 1] = temp_var;
                         break;
                     default:
@@ -124,7 +127,7 @@ void BiggerSource::readFile(const char* file_name)
                     }
                     index = 0;
                     ++category;
-                    category %= 17;
+                    category %= 18;
                 }
                 else
                 {
@@ -184,10 +187,10 @@ void BiggerSource::print_table(const char * file_name)
     fprintf_s(p_file,"\n");
 
     for(size_t i=0; i < rows; i++){
-		fprintf_s(p_file, "%d,%s,%s,%s,%s,%d,%s,%d,%s,%lld,%s,%lld,%lld,%s,%s,%s,%s\n",
+		fprintf_s(p_file, "%d,%s,%s,%s,%s,%d,%s,%d,%s,%lld,%s,%lld,%lld,%d,%s,%s,%s,%s\n",
 			scheme_prog_code[i], prepared_date[i].c_str(), declared_date[i].c_str(), prog_name[i].c_str(),
 			prog_sem_year[i].c_str(), batch[i], examination[i].c_str(), institution_code[i], institution_name[i].c_str(),
-			rollnumber[i], name[i].c_str(), sid[i], result_scheme_id[i], credits[i].c_str(), minor[i].c_str(),
+			rollnumber[i], name[i].c_str(), sid[i], result_scheme_id[i], paper_id[i], credits[i].c_str(), minor[i].c_str(),
 			major[i].c_str(), total[i].c_str());
 		//fprintf_s(p_file, "%s\n", name[i]);
     }
@@ -196,9 +199,9 @@ void BiggerSource::print_table(const char * file_name)
 
 }
 
-BiggerSource::BiggerSource()
+void BiggerSource::MemAllo()
 {
-    size_t colmns = 17;
+    size_t colmns = 18;
     rows = 3024380;
 
     headers.reserve(colmns);
@@ -206,6 +209,7 @@ BiggerSource::BiggerSource()
     scheme_prog_code = new int[rows];
     batch = new int[rows];
     institution_code = new int[rows];
+	paper_id = new int[rows];
     rollnumber = new long long[rows];
     sid = new long long[rows];
     result_scheme_id = new long long[rows];
@@ -224,7 +228,7 @@ BiggerSource::BiggerSource()
 
 }
 
-BiggerSource::~BiggerSource()
+void BiggerSource::MemFree()
 {
 
     headers.clear();
@@ -232,6 +236,7 @@ BiggerSource::~BiggerSource()
     delete [] scheme_prog_code;
     delete [] batch;
     delete [] institution_code;
+	delete [] paper_id;
     delete [] rollnumber;
     delete [] sid;
     delete [] result_scheme_id;
@@ -252,12 +257,73 @@ BiggerSource::~BiggerSource()
 
 void BiggerSource::sort(int column)
 {
-	quicksort(name, 0, rows - 1);
+
+	if (column == 1)
+		quicksort(paper_id, 0, rows - 1);
+	if (column == 2)
+		quicksort(name, 0, rows - 1);
+	if (column == 3)
+		quicksort(rollnumber, 0, rows - 1);
+	if (column == 4)
+		shellsort(paper_id, 0, rows - 1);
+	if (column == 5)
+		shellsort(name, 0, rows - 1);
+	if (column == 6)
+		shellsort(rollnumber, 0, rows - 1);
+
+}
+
+void BiggerSource::shellsort(std::string * toSort, size_t low, size_t high)
+{
+	long long i, j, k;
+
+	for (i = (high + 1) / 2; i>0; i = i / 2)
+		for (j = i; j<high; j++)
+			for (k = j - i; k >= 0; k = k - i)
+			{
+				if (compare_isLess(toSort[k], toSort[k + i]))
+					break;
+				else
+					swap(k, k + i);
+			}
+
+}
+
+void BiggerSource::shellsort(long long * toSort, size_t low, size_t high)
+{
+	long long i, j, k;
+
+	for (i = (high + 1) / 2; i>0; i = i / 2)
+		for (j = i; j<high; j++)
+			for (k = j - i; k >= 0; k = k - i)
+			{
+				if (toSort[k] < toSort[k + i])
+					break;
+				else
+					swap(k, k + i);
+			}
+
+}
+
+void BiggerSource::shellsort(int * toSort, size_t low, size_t high)
+{
+	long long i, j, k;
+
+	for (i = (high + 1) / 2; i>0; i = i / 2)
+		for (j = i; j<high; j++)
+			for (k = j - i; k >= 0; k = k - i)
+			{
+				if (toSort[k] < toSort[k + i])
+					break;
+				else
+					swap(k, k + i);
+			}
+
 }
 
 void BiggerSource::quicksort(std::string * toSort, size_t low, size_t high)
 {
-	
+
 	size_t part;
 	std::stack<size_t> mini_stack;
 
@@ -277,8 +343,76 @@ void BiggerSource::quicksort(std::string * toSort, size_t low, size_t high)
 		{
 			part = partition(toSort, low, high);
 
-//			quicksort(toSort, low, part - 1);
-//			quicksort(toSort, part + 1, high);
+			//			quicksort(toSort, low, part - 1);
+			//			quicksort(toSort, part + 1, high);
+
+			mini_stack.push(part + 1);
+			mini_stack.push(high);
+			mini_stack.push(low);
+			mini_stack.push(part - 1);
+
+		}
+	}
+
+}
+void BiggerSource::quicksort(long long * toSort, size_t low, size_t high)
+{
+
+	size_t part;
+	std::stack<size_t> mini_stack;
+
+	mini_stack.push(low);
+	mini_stack.push(high);
+
+	while (mini_stack.size() > 0) {
+		size_t low;
+		size_t high;
+
+		high = mini_stack.top();
+		mini_stack.pop();
+		low = mini_stack.top();
+		mini_stack.pop();
+
+		if (low < high)
+		{
+			part = partition(toSort, low, high);
+
+			//			quicksort(toSort, low, part - 1);
+			//			quicksort(toSort, part + 1, high);
+
+			mini_stack.push(part + 1);
+			mini_stack.push(high);
+			mini_stack.push(low);
+			mini_stack.push(part - 1);
+
+		}
+	}
+}
+
+void BiggerSource::quicksort(int * toSort, size_t low, size_t high)
+{
+
+	size_t part;
+	std::stack<size_t> mini_stack;
+
+	mini_stack.push(low);
+	mini_stack.push(high);
+
+	while (mini_stack.size() > 0) {
+		size_t low;
+		size_t high;
+
+		high = mini_stack.top();
+		mini_stack.pop();
+		low = mini_stack.top();
+		mini_stack.pop();
+
+		if (low < high)
+		{
+			part = partition(toSort, low, high);
+
+			//			quicksort(toSort, low, part - 1);
+			//			quicksort(toSort, part + 1, high);
 
 			mini_stack.push(part + 1);
 			mini_stack.push(high);
@@ -297,15 +431,53 @@ size_t BiggerSource::partition(std::string* toSort, size_t low, size_t high)
 
 	for (size_t j = low + 1; j <= high - 1; j++)
 	{
-		if(compare_isLess(toSort[j],pivot))
+		if (compare_isLess(toSort[j], pivot))
 		{
 			i++;
-			if(i!=j)
+			if (i != j)
 				swap(i, j);
 		}
 	}
-	swap(i+1, high);
-	return (i+1);
+	swap(i + 1, high);
+	return (i + 1);
+}
+
+size_t BiggerSource::partition(int * toSort, size_t low, size_t high)
+{
+	int pivot = toSort[high];
+
+	size_t i = low;
+
+	for (size_t j = low + 1; j <= high - 1; j++)
+	{
+		if (toSort[j] <= pivot)
+		{
+			i++;
+			if (i != j)
+				swap(i, j);
+		}
+	}
+	swap(i + 1, high);
+	return (i + 1);
+}
+
+size_t BiggerSource::partition(long long * toSort, size_t low, size_t high)
+{
+	long long pivot = toSort[high];
+
+	size_t i = low;
+
+	for (size_t j = low + 1; j <= high - 1; j++)
+	{
+		if (toSort[j] <= pivot)
+		{
+			i++;
+			if (i != j)
+				swap(i, j);
+		}
+	}
+	swap(i + 1, high);
+	return (i + 1);
 }
 
 void BiggerSource::swap(size_t index_1, size_t index_2)
@@ -368,6 +540,10 @@ void BiggerSource::swap(size_t index_1, size_t index_2)
     temp_long = result_scheme_id[index_1];
     result_scheme_id[index_1] = result_scheme_id[index_2];
     result_scheme_id[index_2] = temp_long;
+
+	temp_int = paper_id[index_1];
+	paper_id[index_1] = paper_id[index_2];
+	paper_id[index_2] = temp_int;
 
 	t_string = credits[index_1];
 	credits[index_1] = credits[index_2];
