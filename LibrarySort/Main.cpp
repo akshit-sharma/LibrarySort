@@ -70,6 +70,7 @@ int main(int argc, char ** argv)
 	if (argc != 4)
 	{
 		perror("Invalid parameter given");
+		perror("Found parameter : "+argc);
 		perror("argv[1], argv[2] & argv[3] not supplied");
 		perror("argv[1] & argv[2] is the path of input file");
 		perror("argv[3] is the path of output file");
