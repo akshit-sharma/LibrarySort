@@ -321,6 +321,54 @@ void BiggerSource::shellsort(int * toSort, size_t low, size_t high)
 
 }
 
+
+
+
+void BiggerSource::bubblesort(std::string * toSort, size_t low, size_t high)
+{
+	long long i, j;
+		for (i = high; i > low; i--)
+			for (j = low; j < i; j++)
+			{
+				if (compare_isLess(toSort[j], toSort[j + 1]))
+					break;
+				else
+					swap(j, j + 1);
+			}
+
+}
+
+void BiggerSource::bubblesort(long long * toSort, size_t low, size_t high)
+{
+	long long i, j;
+		for (i = high; i > low; i--)
+			for (j = low; j < i; j++)
+			{
+				if (toSort[j] < toSort[j + 1])
+					break;
+				else
+					swap(j, j + 1);
+			}
+
+}
+
+void BiggerSource::bubblesort(int * toSort, size_t low, size_t high)
+{
+	long long i, j;
+		for (i = high; i > low; i--)
+			for (j = low; j < i; j++)
+			{
+				if (toSort[j] < toSort[j + 1])
+					break;
+				else
+					swap(j, j + 1);
+			}
+
+}
+
+
+
+
 void BiggerSource::quicksort(std::string * toSort, size_t low, size_t high)
 {
 
