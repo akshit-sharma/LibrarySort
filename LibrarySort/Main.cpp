@@ -1,9 +1,7 @@
 ﻿
 
 #include <fstream>
-#include <vector>
 #include <iomanip>
-#include <algorithm>
 
 #include "Main.h"
 #include "BiggerSource.h"
@@ -33,7 +31,7 @@ void runSort(main_class * source_obj, int value, double * timeTaken)
 		source_obj->readFile(file_name_small);
 	else
 		source_obj->readFile(file_name_big);
-	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+	duration = (std::clock() - start) / static_cast<double> CLOCKS_PER_SEC;
 	if (value % 2 == 0)
 		avg_read_times_small += duration;
 	else
@@ -41,13 +39,13 @@ void runSort(main_class * source_obj, int value, double * timeTaken)
 
 	start = std::clock();
 	source_obj->sort(value/2);
-	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+	duration = (std::clock() - start) / static_cast<double> CLOCKS_PER_SEC;
 	quicksort_small = duration;
 
 	start = std::clock();
 	source_obj->print_table(output_file_name);
 	source_obj->MemFree();
-	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+	duration = (std::clock() - start) / static_cast<double> CLOCKS_PER_SEC;
 	if (value % 2 == 0)
 		avg_write_times_small += duration;
 	else
