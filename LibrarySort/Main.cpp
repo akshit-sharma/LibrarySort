@@ -67,6 +67,7 @@ int main(int argc, char ** argv)
 	clock_t start;
 	double duration;
 
+
 	if (argc != 4)
 	{
 		perror("Invalid parameter given");
@@ -109,13 +110,16 @@ int main(int argc, char ** argv)
 	sort_small = &f1;
 	sort_big = &f2;
 
+	printf("before pehla kaam\n");
 	runSort(source_obj, 2, sort_small);
+	printf("after pehla kaam\n");
 	runSort(big_source_obj, 3, sort_big);
+	printf("after doosra kaam\n");
 
 	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"quicksort", "paper_id", *sort_small, "paper_id", *sort_big
 	);
-
+	/*
 	runSort(source_obj, 4, sort_small);
 	runSort(big_source_obj, 5, sort_big);
 
@@ -150,7 +154,7 @@ int main(int argc, char ** argv)
 	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"shellsort", "InstiName", *sort_small, "rollnum.", *sort_big
 	);
-
+	*/
 	fprintf_s(stdout, "\n");
 
 	fprintf_s(stdout, "Avg small file read time %lf\n", (avg_read_times_small / small_times));

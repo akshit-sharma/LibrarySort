@@ -320,6 +320,35 @@ void Source::shellsort(int * toSort, size_t low, size_t high)
 
 }
 
+void Source::bubblesort(std::string * toSort, size_t low, size_t high)
+{
+	long long i, j;
+	for (i = high; i > low; i--)
+		for (j = low; j < i; j++)
+		{
+			if (compare_isLess(toSort[j], toSort[j + 1]))
+				break;
+			else
+				swap(j, j + 1);
+		}
+
+}
+
+void Source::bubblesort(int * toSort, size_t low, size_t high)
+{
+	long long i, j;
+	for (i = high; i > low; i--)
+		for (j = low; j < i; j++)
+		{
+			if (toSort[j] < toSort[j + 1])
+				break;
+			else
+				swap(j, j + 1);
+		}
+
+}
+
+
 void Source::quicksort(int* toSort, size_t low, size_t high)
 {
 

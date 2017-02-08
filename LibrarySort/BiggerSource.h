@@ -47,6 +47,9 @@ private:
 	void shellsort(std::string* toSort, size_t low, size_t high);
 	void shellsort(long long* toSort, size_t low, size_t high);
 	void shellsort(int* toSort, size_t low, size_t high);
+	void bubblesort(std::string* toSort, size_t low, size_t high);
+	void bubblesort(long long* toSort, size_t low, size_t high);
+	void bubblesort(int* toSort, size_t low, size_t high);
 
 public:
 	void MemAllo();
