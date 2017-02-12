@@ -114,7 +114,7 @@ int main(int argc, char ** argv)
 	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"quicksort", "paper_id", *sort_small, "paper_id", *sort_big
 	);
-	/*
+	
 	runSort(source_obj, 4, sort_small);
 	runSort(big_source_obj, 5, sort_big);
 
@@ -149,7 +149,7 @@ int main(int argc, char ** argv)
 	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"shellsort", "InstiName", *sort_small, "rollnum.", *sort_big
 	);
-	*/
+	
 	printf_stream(stdout, "\n");
 
 	printf_stream(stdout, "Avg small file read time %lf\n", (avg_read_times_small / small_times));
