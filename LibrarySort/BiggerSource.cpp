@@ -43,6 +43,9 @@ void BiggerSource::readFile(const char* file_name)
                     continue;
                 }
 
+            if(line_number>=rows)
+                break;
+
                 if(line_number == 0)
                 {
                     if(*buffer_iter == ',' || *(buffer_iter+1)=='\0')

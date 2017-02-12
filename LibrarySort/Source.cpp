@@ -72,6 +72,8 @@ void Source::readFile(const char* file_name)
 					temp_var[index++] = *buffer_iter;
 					temp_var[index] = '\0';
 				}
+                if(line_number>=rows)
+                    break;
 				switch (category)
 				{
 				case 0:
