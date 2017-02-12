@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BiggerSource.h" />
+    <ClInclude Include="GlobalHeader.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Source.h" />
   </ItemGroup>
