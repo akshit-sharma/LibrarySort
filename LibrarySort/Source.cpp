@@ -313,7 +313,8 @@ void Source::sort(int column)
 
 void Source::shellsort(std::string * toSort, size_t low, size_t high)
 {
-	size_t i, j, k;
+	size_t i, j;
+	long long k;
 
 	sorted_col_string = toSort;
 	sorted_col_type = string;
@@ -332,7 +333,8 @@ void Source::shellsort(std::string * toSort, size_t low, size_t high)
 
 void Source::shellsort(int * toSort, size_t low, size_t high)
 {
-	size_t i, j, k;
+	size_t i, j;
+	long long k;
 
 	sorted_col_int = toSort;
 	sorted_col_type = inte;

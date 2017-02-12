@@ -301,14 +301,18 @@ void BiggerSource::sort(int column)
 
 void BiggerSource::shellsort(std::string * toSort, size_t low, size_t high)
 {
-	size_t i, j, k;
+	size_t i, j;
+	long long k;
+
+	size_t i_foot, j_foot, k_foot;
 
 	sorted_col_string = toSort;
 	sorted_col_type = string;
 
+	i_foot = j_foot = k_foot = 0;
 
 	for (i = (high + 1) / 2; i>0; i = i / 2)
-		for (j = i; j<high; j++)
+		for (j = i; j < high; j++) {
 			for (k = j - i; k >= 0; k = k - i)
 			{
 				if (compare_isLess(toSort[k], toSort[k + i]))
@@ -316,12 +320,14 @@ void BiggerSource::shellsort(std::string * toSort, size_t low, size_t high)
 				else
 					swap(k, k + i);
 			}
+		}
 
 }
 
 void BiggerSource::shellsort(long long * toSort, size_t low, size_t high)
 {
-	size_t i, j, k;
+	size_t i, j;
+	long long k;
 
 	sorted_col_long = toSort;
 	sorted_col_type = longe;
@@ -341,7 +347,8 @@ void BiggerSource::shellsort(long long * toSort, size_t low, size_t high)
 
 void BiggerSource::shellsort(int * toSort, size_t low, size_t high)
 {
-	size_t i, j, k;
+	size_t i, j;
+	long long k;
 
 	sorted_col_int = toSort;
 	sorted_col_type = inte;
