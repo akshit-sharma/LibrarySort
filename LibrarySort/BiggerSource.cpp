@@ -379,14 +379,31 @@ void BiggerSource::quicksort(std::string * toSort, size_t low, size_t high)
 	size_t part;
 	std::stack<size_t> mini_stack;
 
-	if (low < high)
-	{
-		part = partition(toSort, low, high);
+	mini_stack.push(low);
+	mini_stack.push(high);
 
-		quicksort(toSort, low, part - 1);
-		quicksort(toSort, part + 1, high);
+	while (mini_stack.size() > 0) {
+		size_t low;
+		size_t high;
+
+		high = mini_stack.top();
+		mini_stack.pop();
+		low = mini_stack.top();
+		mini_stack.pop();
+
+		if (low < high)
+		{
+			part = partition(toSort, low, high);
+
+			quicksort(toSort, low, part - 1);
+			quicksort(toSort, part + 1, high);
+
+			mini_stack.push(part + 1);
+			mini_stack.push(high);
+			mini_stack.push(low);
+			mini_stack.push(part - 1);
+		}
 	}
-
 }
 
 void BiggerSource::quicksort(long long * toSort, size_t low, size_t high)
@@ -395,13 +412,30 @@ void BiggerSource::quicksort(long long * toSort, size_t low, size_t high)
 	size_t part;
 	std::stack<size_t> mini_stack;
 
-	if (low < high)
-	{
+	mini_stack.push(low);
+	mini_stack.push(high);
+
+	while (mini_stack.size() > 0) {
+		size_t low;
+		size_t high;
+
+		high = mini_stack.top();
+		mini_stack.pop();
+		low = mini_stack.top();
+		mini_stack.pop();
+
+		if (low < high)
+		{
 			part = partition(toSort, low, high);
 
 			quicksort(toSort, low, part - 1);
 			quicksort(toSort, part + 1, high);
 
+			mini_stack.push(part + 1);
+			mini_stack.push(high);
+			mini_stack.push(low);
+			mini_stack.push(part - 1);
+		}
 	}
 }
 
@@ -411,12 +445,30 @@ void BiggerSource::quicksort(int * toSort, size_t low, size_t high)
 	size_t part;
 	std::stack<size_t> mini_stack;
 
-	if (low < high)
-	{
-		part = partition(toSort, low, high);
+	mini_stack.push(low);
+	mini_stack.push(high);
 
-		quicksort(toSort, low, part - 1);
-		quicksort(toSort, part + 1, high);
+	while (mini_stack.size() > 0) {
+		size_t low;
+		size_t high;
+
+		high = mini_stack.top();
+		mini_stack.pop();
+		low = mini_stack.top();
+		mini_stack.pop();
+
+		if (low < high)
+		{
+			part = partition(toSort, low, high);
+
+			quicksort(toSort, low, part - 1);
+			quicksort(toSort, part + 1, high);
+
+			mini_stack.push(part + 1);
+			mini_stack.push(high);
+			mini_stack.push(low);
+			mini_stack.push(part - 1);
+		}
 	}
 }
 
