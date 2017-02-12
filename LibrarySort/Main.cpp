@@ -2,6 +2,9 @@
 
 #include <fstream>
 #include <iomanip>
+#include <string>
+
+#include <stdio.h>
 
 #include "Main.h"
 #include "BiggerSource.h"
@@ -88,6 +91,7 @@ int main(int argc, char ** argv)
 	printf_stream(stdout, " %10s | %10s | %10s | %10s | %10s \n",
 		"technique", "colSmData", "timeTaken", "colBiData", "timeTaken"
 			);
+
 
 
 	main_class * source_obj = &source;
