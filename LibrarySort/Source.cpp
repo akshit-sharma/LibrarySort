@@ -187,11 +187,13 @@ void Source::print_table(const char * file_name)
 	FILE * p_file;
 	FILE * single_col_file;
 	std::string sorted_file_name(file_name);
+	int i_value;
+	std::string s_value;
 
 	sorted_file_name.replace(sorted_file_name.end() - 4,
-		sorted_file_name.end(), "");
+		sorted_file_name.end(), "_sma_");
 
-	sorted_file_name += std::string(init_num + "");
+	sorted_file_name += std::to_string(init_num);
 
 	fopen_s(&p_file, file_name, "w");
 	fopen_s(&single_col_file, sorted_file_name.c_str(), "w");
@@ -217,10 +219,12 @@ void Source::print_table(const char * file_name)
 		switch (sorted_col_type)
 		{
 		case inte:
-			printf_stream(single_col_file, "%d\n", sorted_col_int[i]);
+			i_value = sorted_col_int[i];
+			printf_stream(single_col_file, "%d\n", i_value);
 			break;
 		case string:
-			printf_stream(single_col_file, "%s\n", sorted_col_string[i].c_str());
+			s_value = sorted_col_string[i];
+			printf_stream(single_col_file, "%s\n", s_value.c_str());
 			break;
 		}
 
@@ -295,18 +299,36 @@ void Source::MemFree()
 
 void Source::sort(int column)
 {
-	if (column == 1)
+	if (column == 1) {
 		quicksort(paper_id, 0, rows - 1);
-	if (column == 2)
+		sorted_col_int = paper_id;
+		sorted_col_type = inte;
+	}
+	if (column == 2) {
 		quicksort(subject_name, 0, rows - 1);
-	if (column == 3)
+		sorted_col_string = subject_name;
+		sorted_col_type = string;
+	}
+	if (column == 3) {
 		quicksort(institution_name, 0, rows - 1);
-	if (column == 4)
+		sorted_col_string = institution_name;
+		sorted_col_type = string;
+	}
+	if (column == 4) {
 		shellsort(paper_id, 0, rows - 1);
-	if (column == 5)
+		sorted_col_int = paper_id;
+		sorted_col_type = inte;
+	}
+	if (column == 5) {
 		shellsort(subject_name, 0, rows - 1);
-	if (column == 6)
+		sorted_col_string = subject_name;
+		sorted_col_type = string;
+	}
+	if (column == 6) {
 		shellsort(institution_name, 0, rows - 1);
+		sorted_col_string = institution_name;
+		sorted_col_type = string;
+	}
 
 }
 
@@ -316,8 +338,6 @@ void Source::shellsort(std::string * toSort, size_t low, size_t high)
 	size_t i, j;
 	long long k;
 
-	sorted_col_string = toSort;
-	sorted_col_type = string;
 
 	for (i = (high + 1) / 2; i>0; i = i / 2)
 		for (j = i; j<high; j++)
@@ -335,9 +355,6 @@ void Source::shellsort(int * toSort, size_t low, size_t high)
 {
 	size_t i, j;
 	long long k;
-
-	sorted_col_int = toSort;
-	sorted_col_type = inte;
 
 	for (i = (high + 1) / 2; i>0; i = i / 2)
 		for (j = i; j<high; j++)
@@ -357,34 +374,13 @@ void Source::quicksort(int* toSort, size_t low, size_t high)
 	size_t part;
 	std::stack<size_t> mini_stack;
 
-	sorted_col_int = toSort;
-	sorted_col_type = inte;
+	if (low < high)
+	{
+		part = partition(toSort, low, high);
 
-	mini_stack.push(low);
-	mini_stack.push(high);
+		quicksort(toSort, low, part - 1);
+		quicksort(toSort, part + 1, high);
 
-	while (mini_stack.size() > 0) {
-		size_t low;
-		size_t high;
-
-		high = mini_stack.top();
-		mini_stack.pop();
-		low = mini_stack.top();
-		mini_stack.pop();
-
-		if (low < high)
-		{
-			part = partition(toSort, low, high);
-
-			//			quicksort(toSort, low, part - 1);
-			//			quicksort(toSort, part + 1, high);
-
-			mini_stack.push(part + 1);
-			mini_stack.push(high);
-			mini_stack.push(low);
-			mini_stack.push(part - 1);
-
-		}
 	}
 
 }
@@ -394,36 +390,15 @@ void Source::quicksort(std::string * toSort, size_t low, size_t high)
 {
 
 	size_t part;
-	std::stack<size_t> mini_stack;
+	
+	if (low < high)
+	{
+		part = partition(toSort, low, high);
 
-	sorted_col_string = toSort;
-	sorted_col_type = string;
+		quicksort(toSort, low, part - 1);
+		quicksort(toSort, part + 1, high);
 
-	mini_stack.push(low);
-	mini_stack.push(high);
-
-	while (mini_stack.size() > 0) {
-		size_t low;
-		size_t high;
-
-		high = mini_stack.top();
-		mini_stack.pop();
-		low = mini_stack.top();
-		mini_stack.pop();
-
-		if (low < high)
-		{
-			part = partition(toSort, low, high);
-
-			//			quicksort(toSort, low, part - 1);
-			//			quicksort(toSort, part + 1, high);
-
-			mini_stack.push(part + 1);
-			mini_stack.push(high);
-			mini_stack.push(low);
-			mini_stack.push(part - 1);
-
-		}
+			
 	}
 
 }

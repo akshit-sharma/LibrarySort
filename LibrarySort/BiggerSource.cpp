@@ -178,7 +178,7 @@ void BiggerSource::print_table(const char * file_name)
 	std::string sorted_file_name(file_name);
 
 	sorted_file_name.replace(sorted_file_name.end() - 4,
-		sorted_file_name.end(), "");
+		sorted_file_name.end(), "_big_");
 
 	sorted_file_name += std::string(init_num+"");
 	sorted_file_name += ".csv";
@@ -284,18 +284,36 @@ void BiggerSource::MemFree()
 void BiggerSource::sort(int column)
 {
 
-	if (column == 1)
+	if (column == 1) {
 		quicksort(paper_id, 0, rows - 1);
-	if (column == 2)
+		sorted_col_int = paper_id;
+		sorted_col_type = inte;
+	}
+	if (column == 2) {
 		quicksort(name, 0, rows - 1);
-	if (column == 3)
+		sorted_col_string = name;
+		sorted_col_type = string;
+	}
+	if (column == 3) {
 		quicksort(rollnumber, 0, rows - 1);
-	if (column == 4)
+		sorted_col_long = rollnumber;
+		sorted_col_type = longe;
+	}
+	if (column == 4) {
 		shellsort(paper_id, 0, rows - 1);
-	if (column == 5)
+		sorted_col_int = paper_id;
+		sorted_col_type = inte;
+	}
+	if (column == 5) {
 		shellsort(name, 0, rows - 1);
-	if (column == 6)
+		sorted_col_string = name;
+		sorted_col_type = string;
+	}
+	if (column == 6) {
 		shellsort(rollnumber, 0, rows - 1);
+		sorted_col_long = rollnumber;
+		sorted_col_type = longe;
+	}
 
 }
 
@@ -305,9 +323,6 @@ void BiggerSource::shellsort(std::string * toSort, size_t low, size_t high)
 	long long k;
 
 	size_t i_foot, j_foot, k_foot;
-
-	sorted_col_string = toSort;
-	sorted_col_type = string;
 
 	i_foot = j_foot = k_foot = 0;
 
@@ -329,10 +344,6 @@ void BiggerSource::shellsort(long long * toSort, size_t low, size_t high)
 	size_t i, j;
 	long long k;
 
-	sorted_col_long = toSort;
-	sorted_col_type = longe;
-
-
 	for (i = (high + 1) / 2; i>0; i = i / 2)
 		for (j = i; j<high; j++)
 			for (k = j - i; k >= 0; k = k - i)
@@ -349,10 +360,7 @@ void BiggerSource::shellsort(int * toSort, size_t low, size_t high)
 {
 	size_t i, j;
 	long long k;
-
-	sorted_col_int = toSort;
-	sorted_col_type = inte;
-
+	
 	for (i = (high + 1) / 2; i>0; i = i / 2)
 		for (j = i; j<high; j++)
 			for (k = j - i; k >= 0; k = k - i)
@@ -371,71 +379,29 @@ void BiggerSource::quicksort(std::string * toSort, size_t low, size_t high)
 	size_t part;
 	std::stack<size_t> mini_stack;
 
-	sorted_col_string = toSort;
-	sorted_col_type = string;
+	if (low < high)
+	{
+		part = partition(toSort, low, high);
 
-	mini_stack.push(low);
-	mini_stack.push(high);
-
-	while (mini_stack.size() > 0) {
-		size_t low;
-		size_t high;
-
-		high = mini_stack.top();
-		mini_stack.pop();
-		low = mini_stack.top();
-		mini_stack.pop();
-
-		if (low < high)
-		{
-			part = partition(toSort, low, high);
-
-			//			quicksort(toSort, low, part - 1);
-			//			quicksort(toSort, part + 1, high);
-
-			mini_stack.push(part + 1);
-			mini_stack.push(high);
-			mini_stack.push(low);
-			mini_stack.push(part - 1);
-
-		}
+		quicksort(toSort, low, part - 1);
+		quicksort(toSort, part + 1, high);
 	}
 
 }
+
 void BiggerSource::quicksort(long long * toSort, size_t low, size_t high)
 {
 
 	size_t part;
 	std::stack<size_t> mini_stack;
 
-	sorted_col_long = toSort;
-	sorted_col_type = longe;
-
-	mini_stack.push(low);
-	mini_stack.push(high);
-
-	while (mini_stack.size() > 0) {
-		size_t low;
-		size_t high;
-
-		high = mini_stack.top();
-		mini_stack.pop();
-		low = mini_stack.top();
-		mini_stack.pop();
-
-		if (low < high)
-		{
+	if (low < high)
+	{
 			part = partition(toSort, low, high);
 
-			//			quicksort(toSort, low, part - 1);
-			//			quicksort(toSort, part + 1, high);
+			quicksort(toSort, low, part - 1);
+			quicksort(toSort, part + 1, high);
 
-			mini_stack.push(part + 1);
-			mini_stack.push(high);
-			mini_stack.push(low);
-			mini_stack.push(part - 1);
-
-		}
 	}
 }
 
@@ -445,35 +411,12 @@ void BiggerSource::quicksort(int * toSort, size_t low, size_t high)
 	size_t part;
 	std::stack<size_t> mini_stack;
 
-	sorted_col_int = toSort;
-	sorted_col_type = inte;
+	if (low < high)
+	{
+		part = partition(toSort, low, high);
 
-
-	mini_stack.push(low);
-	mini_stack.push(high);
-
-	while (mini_stack.size() > 0) {
-		size_t low;
-		size_t high;
-
-		high = mini_stack.top();
-		mini_stack.pop();
-		low = mini_stack.top();
-		mini_stack.pop();
-
-		if (low < high)
-		{
-			part = partition(toSort, low, high);
-
-			//			quicksort(toSort, low, part - 1);
-			//			quicksort(toSort, part + 1, high);
-
-			mini_stack.push(part + 1);
-			mini_stack.push(high);
-			mini_stack.push(low);
-			mini_stack.push(part - 1);
-
-		}
+		quicksort(toSort, low, part - 1);
+		quicksort(toSort, part + 1, high);
 	}
 }
 
