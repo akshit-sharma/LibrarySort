@@ -31,6 +31,8 @@ private:
 	std::string * max_marks;
 	std::string * pass_marks;
 
+	static int init_num;
+
 	std::string * sorted_col_string;
 	int * sorted_col_int;
 
@@ -61,4 +63,3 @@ public:
 	void MemFree();
 
 };
-

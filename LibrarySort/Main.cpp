@@ -12,7 +12,7 @@ BiggerSource bigsource;
 
 double small_times, big_times;
 double avg_read_times_small, avg_read_times_big;
-double quicksort_small, quicksort_big;
+double sort_duration;
 double avg_write_times_small, avg_write_times_big;
 
 const char * file_name_small;
@@ -40,7 +40,7 @@ void runSort(main_class * source_obj, int value, double * timeTaken)
 	start = std::clock();
 	source_obj->sort(value/2);
 	duration = (std::clock() - start) / static_cast<double> CLOCKS_PER_SEC;
-	quicksort_small = duration;
+	sort_duration = duration;
 
 	start = std::clock();
 	source_obj->print_table(output_file_name);
@@ -56,15 +56,12 @@ void runSort(main_class * source_obj, int value, double * timeTaken)
 	else
 		big_times++;
 
-	*timeTaken = quicksort_small;
+	*timeTaken = sort_duration;
 
 }
 
 int main(int argc, char ** argv)
 {
-	clock_t start;
-	double duration;
-
 	if (argc != 4)
 	{
 		perror("Invalid parameter given");

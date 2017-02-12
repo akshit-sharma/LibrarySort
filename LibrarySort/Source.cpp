@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <stack>
 
+int Source::init_num = 0;
+
 void Source::readFile(const char* file_name)
 {
 
@@ -183,8 +185,17 @@ void Source::print_table(const char * file_name)
 {
 
 	FILE * p_file;
-	
+	FILE * single_col_file;
+	std::string sorted_file_name(file_name);
+
+	sorted_file_name.replace(sorted_file_name.end() - 4,
+		sorted_file_name.end(), "");
+
+	sorted_file_name += std::string(init_num + "");
+
 	fopen_s(&p_file, file_name, "w");
+	fopen_s(&single_col_file, sorted_file_name.c_str(), "w");
+	sorted_file_name += ".csv";
 
 	std::vector<std::string>::iterator iter;
 	for (iter = headers.begin();
@@ -202,10 +213,21 @@ void Source::print_table(const char * file_name)
 			scheme_prog_code[i], prog_name[i].c_str(), scheme_id[i], prog_sem_year[i].c_str(),
 			prepared_date[i].c_str(), declared_date[i].c_str(), institution_code[i], institution_name[i].c_str(), s_number[i],
 			paper_id[i], paper_code[i].c_str(), subject_name[i].c_str(), credits[i], type[i].c_str(), exam[i].c_str(), mode[i].c_str(), kind[i].c_str(), minor[i].c_str(), major[i].c_str(), max_marks[i].c_str(), pass_marks[i].c_str());
-				
+
+		switch (sorted_col_type)
+		{
+		case inte:
+			printf_stream(single_col_file, "%d\n", sorted_col_int[i]);
+			break;
+		case string:
+			printf_stream(single_col_file, "%s\n", sorted_col_string[i].c_str());
+			break;
+		}
+
 	}
 
 	fclose(p_file);
+	fclose(single_col_file);
 
 }
 
@@ -239,6 +261,7 @@ void Source::MemAllo()
 	max_marks = new std::string[rows];
 	pass_marks = new std::string[rows];
 
+	init_num++;
 
 }
 

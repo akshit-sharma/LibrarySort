@@ -29,9 +29,11 @@ private:
     std::string * major;
     std::string * total;
 
+	static int init_num;
+
 	std::string * sorted_col_string;
 	int * sorted_col_int;
-	long * sorted_col_long;
+	long long * sorted_col_long;
 
 	enum type
 	{
