@@ -53,7 +53,7 @@ void BiggerSource::readFile(const char* file_name)
                             temp_var[index++] = *buffer_iter;
                             temp_var[index] = '\0';
                         }
-                        headers.push_back(temp_var);
+                        headers.push_back(std::string(temp_var));
                         index = 0;
                         continue;
                     }
@@ -183,8 +183,8 @@ void BiggerSource::print_table(const char * file_name)
 	sorted_file_name += std::string(init_num+"");
 	sorted_file_name += ".csv";
 
-	fopen_s(&p_file, file_name, "w");
-	fopen_s(&single_col_file, sorted_file_name.c_str(), "w");
+	fopen_stream(&p_file, file_name, "w");
+	fopen_stream(&single_col_file, sorted_file_name.c_str(), "w");
 
     std::vector<std::string>::iterator iter;
     for(iter = headers.begin();
@@ -226,7 +226,7 @@ void BiggerSource::print_table(const char * file_name)
 void BiggerSource::MemAllo()
 {
     size_t colmns = 18;
-    rows = 3024380;
+    rows = 3024697;
 
     headers.reserve(colmns);
 

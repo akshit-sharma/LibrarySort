@@ -18,6 +18,9 @@ void Source::readFile(const char* file_name)
 	int line_number;
 	int category;
 
+    for(index=0;index<128;index++)
+        temp_var[index] = '\0';
+
 	std::ifstream file(file_name,
 	                   std::ios::binary | std::ios::in);
 	if (file.fail())
@@ -54,7 +57,7 @@ void Source::readFile(const char* file_name)
 						temp_var[index++] = *buffer_iter;
 						temp_var[index] = '\0';
 					}
-					headers.push_back(temp_var);
+					headers.push_back(std::string(temp_var));
 					index = 0;
 					continue;
 				}
@@ -189,8 +192,8 @@ void Source::print_table(const char* file_name)
 
 	sorted_file_name += std::to_string(init_num);
 
-	fopen_s(&p_file, file_name, "w");
-	fopen_s(&single_col_file, sorted_file_name.c_str(), "w");
+	fopen_stream(&p_file, file_name, "w");
+	fopen_stream(&single_col_file, sorted_file_name.c_str(), "w");
 	sorted_file_name += ".csv";
 
 	std::vector<std::string>::iterator iter;
@@ -233,7 +236,7 @@ void Source::print_table(const char* file_name)
 void Source::MemAllo()
 {
 	size_t colmns = 21;
-	rows = 247472;
+	rows = 247694;
 
 	headers.reserve(colmns);
 
