@@ -190,15 +190,15 @@ void Source::print_table(const char * file_name)
 	for (iter = headers.begin();
 		iter != headers.end(); ++iter){
 		if (iter != headers.begin())
-			fprintf_s(p_file, ",");
-		fprintf_s(p_file,"%s",(*iter).c_str());
+			printf_stream(p_file, ",");
+		printf_stream(p_file,"%s",(*iter).c_str());
 	}
 
-	fprintf_s(p_file,"\n");
+	printf_stream(p_file,"\n");
 
 	for (size_t i = 0; i < rows; i++)
 	{
-		fprintf_s(p_file, "%d,%s,%d,%s,%s,%s,%d,%s,%d,%d,%s,%s,%d,%s,%s,%s,%s,%s,%s,%s,%s\n",
+		printf_stream(p_file, "%d,%s,%d,%s,%s,%s,%d,%s,%d,%d,%s,%s,%d,%s,%s,%s,%s,%s,%s,%s,%s\n",
 			scheme_prog_code[i], prog_name[i].c_str(), scheme_id[i], prog_sem_year[i].c_str(),
 			prepared_date[i].c_str(), declared_date[i].c_str(), institution_code[i], institution_name[i].c_str(), s_number[i],
 			paper_id[i], paper_code[i].c_str(), subject_name[i].c_str(), credits[i], type[i].c_str(), exam[i].c_str(), mode[i].c_str(), kind[i].c_str(), minor[i].c_str(), major[i].c_str(), max_marks[i].c_str(), pass_marks[i].c_str());
@@ -292,6 +292,9 @@ void Source::shellsort(std::string * toSort, size_t low, size_t high)
 {
 	long long i, j, k;
 
+	sorted_col_string = toSort;
+	sorted_col_type = string;
+
 	for (i = (high + 1) / 2; i>0; i = i / 2)
 		for (j = i; j<high; j++)
 			for (k = j - i; k >= 0; k = k - i)
@@ -307,6 +310,9 @@ void Source::shellsort(std::string * toSort, size_t low, size_t high)
 void Source::shellsort(int * toSort, size_t low, size_t high)
 {
 	long long i, j, k;
+
+	sorted_col_int = toSort;
+	sorted_col_type = inte;
 
 	for (i = (high + 1) / 2; i>0; i = i / 2)
 		for (j = i; j<high; j++)
@@ -325,6 +331,9 @@ void Source::quicksort(int* toSort, size_t low, size_t high)
 
 	size_t part;
 	std::stack<size_t> mini_stack;
+
+	sorted_col_int = toSort;
+	sorted_col_type = inte;
 
 	mini_stack.push(low);
 	mini_stack.push(high);
@@ -361,6 +370,9 @@ void Source::quicksort(std::string * toSort, size_t low, size_t high)
 
 	size_t part;
 	std::stack<size_t> mini_stack;
+
+	sorted_col_string = toSort;
+	sorted_col_type = string;
 
 	mini_stack.push(low);
 	mini_stack.push(high);

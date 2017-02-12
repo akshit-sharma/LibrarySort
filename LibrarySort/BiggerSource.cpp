@@ -180,19 +180,19 @@ void BiggerSource::print_table(const char * file_name)
     for(iter = headers.begin();
         iter != headers.end(); ++iter){
             if(iter != headers.begin())
-                fprintf_s(p_file, ",");
-            fprintf_s(p_file,"%s",(*iter).c_str());
+                printf_stream(p_file, ",");
+            printf_stream(p_file,"%s",(*iter).c_str());
     }
 
-    fprintf_s(p_file,"\n");
+    printf_stream(p_file,"\n");
 
     for(size_t i=0; i < rows; i++){
-		fprintf_s(p_file, "%d,%s,%s,%s,%s,%d,%s,%d,%s,%lld,%s,%lld,%lld,%d,%s,%s,%s,%s\n",
+		printf_stream(p_file, "%d,%s,%s,%s,%s,%d,%s,%d,%s,%lld,%s,%lld,%lld,%d,%s,%s,%s,%s\n",
 			scheme_prog_code[i], prepared_date[i].c_str(), declared_date[i].c_str(), prog_name[i].c_str(),
 			prog_sem_year[i].c_str(), batch[i], examination[i].c_str(), institution_code[i], institution_name[i].c_str(),
 			rollnumber[i], name[i].c_str(), sid[i], result_scheme_id[i], paper_id[i], credits[i].c_str(), minor[i].c_str(),
 			major[i].c_str(), total[i].c_str());
-		//fprintf_s(p_file, "%s\n", name[i]);
+		//printf_stream(p_file, "%s\n", name[i]);
     }
 
     fclose(p_file);
@@ -277,6 +277,10 @@ void BiggerSource::shellsort(std::string * toSort, size_t low, size_t high)
 {
 	long long i, j, k;
 
+	sorted_col_string = toSort;
+	sorted_col_type = string;
+
+
 	for (i = (high + 1) / 2; i>0; i = i / 2)
 		for (j = i; j<high; j++)
 			for (k = j - i; k >= 0; k = k - i)
@@ -293,6 +297,10 @@ void BiggerSource::shellsort(long long * toSort, size_t low, size_t high)
 {
 	long long i, j, k;
 
+	sorted_col_long = toSort;
+	sorted_col_type = longe;
+
+
 	for (i = (high + 1) / 2; i>0; i = i / 2)
 		for (j = i; j<high; j++)
 			for (k = j - i; k >= 0; k = k - i)
@@ -308,6 +316,9 @@ void BiggerSource::shellsort(long long * toSort, size_t low, size_t high)
 void BiggerSource::shellsort(int * toSort, size_t low, size_t high)
 {
 	long long i, j, k;
+
+	sorted_col_int = toSort;
+	sorted_col_type = inte;
 
 	for (i = (high + 1) / 2; i>0; i = i / 2)
 		for (j = i; j<high; j++)
@@ -326,6 +337,9 @@ void BiggerSource::quicksort(std::string * toSort, size_t low, size_t high)
 
 	size_t part;
 	std::stack<size_t> mini_stack;
+
+	sorted_col_string = toSort;
+	sorted_col_type = string;
 
 	mini_stack.push(low);
 	mini_stack.push(high);
@@ -361,6 +375,9 @@ void BiggerSource::quicksort(long long * toSort, size_t low, size_t high)
 	size_t part;
 	std::stack<size_t> mini_stack;
 
+	sorted_col_long = toSort;
+	sorted_col_type = longe;
+
 	mini_stack.push(low);
 	mini_stack.push(high);
 
@@ -394,6 +411,10 @@ void BiggerSource::quicksort(int * toSort, size_t low, size_t high)
 
 	size_t part;
 	std::stack<size_t> mini_stack;
+
+	sorted_col_int = toSort;
+	sorted_col_type = inte;
+
 
 	mini_stack.push(low);
 	mini_stack.push(high);

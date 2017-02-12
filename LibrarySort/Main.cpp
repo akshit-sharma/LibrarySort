@@ -88,7 +88,7 @@ int main(int argc, char ** argv)
 	big_times = 0;
 
 
-	fprintf_s(stdout, " %10s | %10s | %10s | %10s | %10s \n",
+	printf_stream(stdout, " %10s | %10s | %10s | %10s | %10s \n",
 		"technique", "colSmData", "timeTaken", "colBiData", "timeTaken"
 			);
 
@@ -110,54 +110,54 @@ int main(int argc, char ** argv)
 	runSort(source_obj, 2, sort_small);
 	runSort(big_source_obj, 3, sort_big);
 
-	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"quicksort", "paper_id", *sort_small, "paper_id", *sort_big
 	);
-
+	/*
 	runSort(source_obj, 4, sort_small);
 	runSort(big_source_obj, 5, sort_big);
 
-	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"quicksort", "subjName", *sort_small, "name", *sort_big
 	);
 
 	runSort(source_obj, 6, sort_small);
 	runSort(big_source_obj, 7, sort_big);
 
-	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"quicksort", "InstiName", *sort_small, "rollnum.", *sort_big
 	);
 
 	runSort(source_obj, 8, sort_small);
 	runSort(big_source_obj, 9, sort_big);
 
-	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"shellsort", "paper_id", *sort_small, "paper_id", *sort_big
 	);
 
 	runSort(source_obj, 10, sort_small);
 	runSort(big_source_obj, 11, sort_big);
 
-	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"shellsort", "subjName", *sort_small, "name", *sort_big
 	);
 
 	runSort(source_obj, 12, sort_small);
 	runSort(big_source_obj, 13, sort_big);
 
-	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"shellsort", "InstiName", *sort_small, "rollnum.", *sort_big
 	);
+	*/
+	printf_stream(stdout, "\n");
 
-	fprintf_s(stdout, "\n");
+	printf_stream(stdout, "Avg small file read time %lf\n", (avg_read_times_small / small_times));
+	printf_stream(stdout, "Avg big file read time %lf\n", (avg_read_times_big / big_times));
+	printf_stream(stdout, "Avg small file write time %lf\n", (avg_write_times_small / small_times));
+	printf_stream(stdout, "Avg big file write time %lf\n", (avg_write_times_big / big_times));
 
-	fprintf_s(stdout, "Avg small file read time %lf\n", (avg_read_times_small / small_times));
-	fprintf_s(stdout, "Avg big file read time %lf\n", (avg_read_times_big / big_times));
-	fprintf_s(stdout, "Avg small file write time %lf\n", (avg_write_times_small / small_times));
-	fprintf_s(stdout, "Avg big file write time %lf\n", (avg_write_times_big / big_times));
-
-	fprintf_s(stdout, "\n");
-	fprintf_s(stdout, "\n");
+	printf_stream(stdout, "\n");
+	printf_stream(stdout, "\n");
 
 	return 0;
 
