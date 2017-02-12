@@ -75,25 +75,25 @@ void Source::readFile(const char* file_name)
 					scheme_prog_code[line_number - 1] = (atoi(temp_var));
 					break;
 				case 1:
-					prog_name[line_number - 1] = (temp_var);
+					prog_name[line_number - 1] = std::string(temp_var);
 					break;
 				case 2:
 					scheme_id[line_number - 1] = (atoi(temp_var));
 					break;
 				case 3:
-					prog_sem_year[line_number - 1] = (temp_var);
+					prog_sem_year[line_number - 1] = std::string(temp_var);
 					break;
 				case 4:
-					prepared_date[line_number - 1] = (temp_var);
+					prepared_date[line_number - 1] = std::string(temp_var);
 					break;
 				case 5:
-					declared_date[line_number - 1] = (temp_var);
+					declared_date[line_number - 1] = std::string(temp_var);
 					break;
 				case 6:
 					institution_code[line_number - 1] = (atoi(temp_var));
 					break;
 				case 7:
-					institution_name[line_number - 1] = (temp_var);
+					institution_name[line_number - 1] = std::string(temp_var);
 					break;
 				case 8:
 					s_number[line_number - 1] = (atoi(temp_var));
@@ -102,37 +102,37 @@ void Source::readFile(const char* file_name)
 					paper_id[line_number - 1] = (atoi((temp_var)));
 					break;
 				case 10:
-					paper_code[line_number - 1] = (temp_var);
+					paper_code[line_number - 1] = std::string(temp_var);
 					break;
 				case 11:
-					subject_name[line_number - 1] = (temp_var);
+					subject_name[line_number - 1] = std::string(temp_var);
 					break;
 				case 12:
 					credits[line_number - 1] = (atoi(temp_var));
 					break;
 				case 13:
-					type[line_number - 1] = (temp_var);
+					type[line_number - 1] = std::string(temp_var);
 					break;
 				case 14:
-					exam[line_number - 1] = (temp_var);
+					exam[line_number - 1] = std::string(temp_var);
 					break;
 				case 15:
-					mode[line_number - 1] = (temp_var);
+					mode[line_number - 1] = std::string(temp_var);
 					break;
 				case 16:
-					kind[line_number - 1] = (temp_var);
+					kind[line_number - 1] = std::string(temp_var);
 					break;
 				case 17:
-					minor[line_number - 1] = (temp_var);
+					minor[line_number - 1] = std::string(temp_var);
 					break;
 				case 18:
-					major[line_number - 1] = (temp_var);
+					major[line_number - 1] = std::string(temp_var);
 					break;
 				case 19:
-					max_marks[line_number - 1] = (temp_var);
+					max_marks[line_number - 1] = std::string(temp_var);
 					break;
 				case 20:
-					pass_marks[line_number - 1] = (temp_var);
+					pass_marks[line_number - 1] = std::string(temp_var);
 					break;
 				default:
 					break;

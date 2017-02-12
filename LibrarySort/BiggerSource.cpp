@@ -73,34 +73,34 @@ void BiggerSource::readFile(const char* file_name)
                         scheme_prog_code[line_number-1] = (atoi(temp_var));
                         break;
                     case 1: //prepared_date
-						prepared_date[line_number - 1] = temp_var;
+						prepared_date[line_number - 1] = std::string(temp_var);
                         break;
                     case 2: //declared_date
-						declared_date[line_number - 1] = temp_var;
+						declared_date[line_number - 1] = std::string(temp_var);
                         break;
                     case 3: //prog_name
-						prog_name[line_number - 1] = temp_var;
+						prog_name[line_number - 1] = std::string(temp_var);
                         break;
                     case 4: //prog_sem_year
-						prog_sem_year[line_number - 1] = temp_var;
+						prog_sem_year[line_number - 1] = std::string(temp_var);
                         break;
                     case 5: //batch
                         batch[line_number-1] = (atoi(temp_var));
                         break;
                     case 6: //examination
-						examination[line_number - 1] = temp_var;
+						examination[line_number - 1] = std::string(temp_var);
                         break;
                     case 7: //institution_code
                         institution_code[line_number-1] = (atoi(temp_var));
                         break;
                     case 8: //institution_name
-						institution_name[line_number - 1] = temp_var;
+						institution_name[line_number - 1] = std::string(temp_var);
                         break;
                     case 9: //rollnumber
                         rollnumber[line_number-1] = (atoll(temp_var));
                         break;
                     case 10: //name
-						name[line_number - 1] = temp_var;
+						name[line_number - 1] = std::string(temp_var);
                         break;
                     case 11: //sid
                         sid[line_number-1] = (atoll(temp_var));
@@ -112,16 +112,16 @@ void BiggerSource::readFile(const char* file_name)
 						paper_id[line_number - 1] = atoi(temp_var);
 						break;
                     case 14: //credits
-						credits[line_number - 1] = temp_var;
+						credits[line_number - 1] = std::string(temp_var);
                         break;
                     case 15: //minor
-						minor[line_number - 1] = temp_var;
+						minor[line_number - 1] = std::string(temp_var);
                         break;
                     case 16: //major
-						major[line_number - 1] = temp_var;
+						major[line_number - 1] = std::string(temp_var);
                         break;
                     case 17: //total
-						total[line_number - 1] = temp_var;
+						total[line_number - 1] = std::string(temp_var);
                         break;
                     default:
                         break;
