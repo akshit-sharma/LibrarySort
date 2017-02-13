@@ -378,8 +378,6 @@ void BiggerSource::shellsort(int * toSort, size_t low, size_t high)
 
 void BiggerSource::quicksort(std::string * toSort, size_t low, size_t high)
 {
-
-	size_t part;
 	std::stack<size_t> mini_stack;
 
 	mini_stack.push(low);
@@ -396,23 +394,26 @@ void BiggerSource::quicksort(std::string * toSort, size_t low, size_t high)
 
 		if (low < high)
 		{
-			part = partition(toSort, low, high);
+			size_t part_index = partition(toSort, low, high);
 
-			quicksort(toSort, low, part - 1);
-			quicksort(toSort, part + 1, high);
+			if (low < part_index - 1 && part_index != 0)
+			{
+				mini_stack.push(low);
+				mini_stack.push(part_index - 1);
+			}
 
-			mini_stack.push(part + 1);
-			mini_stack.push(high);
-			mini_stack.push(low);
-			mini_stack.push(part - 1);
+			if (part_index + 1 < high)
+			{
+				mini_stack.push(part_index + 1);
+				mini_stack.push(high);
+			}
+
 		}
 	}
 }
 
 void BiggerSource::quicksort(long long * toSort, size_t low, size_t high)
 {
-
-	size_t part;
 	std::stack<size_t> mini_stack;
 
 	mini_stack.push(low);
@@ -429,15 +430,19 @@ void BiggerSource::quicksort(long long * toSort, size_t low, size_t high)
 
 		if (low < high)
 		{
-			part = partition(toSort, low, high);
+			size_t part_index = partition(toSort, low, high);
 
-			quicksort(toSort, low, part - 1);
-			quicksort(toSort, part + 1, high);
+			if (low < part_index - 1 && part_index != 0)
+			{
+				mini_stack.push(low);
+				mini_stack.push(part_index - 1);
+			}
 
-			mini_stack.push(part + 1);
-			mini_stack.push(high);
-			mini_stack.push(low);
-			mini_stack.push(part - 1);
+			if (part_index + 1 < high)
+			{
+				mini_stack.push(part_index + 1);
+				mini_stack.push(high);
+			}
 		}
 	}
 }
@@ -445,7 +450,6 @@ void BiggerSource::quicksort(long long * toSort, size_t low, size_t high)
 void BiggerSource::quicksort(int * toSort, size_t low, size_t high)
 {
 
-	size_t part;
 	std::stack<size_t> mini_stack;
 
 	mini_stack.push(low);
@@ -462,15 +466,19 @@ void BiggerSource::quicksort(int * toSort, size_t low, size_t high)
 
 		if (low < high)
 		{
-			part = partition(toSort, low, high);
+			size_t part_index = partition(toSort, low, high);
 
-			quicksort(toSort, low, part - 1);
-			quicksort(toSort, part + 1, high);
+			if (low < part_index - 1 && part_index != 0)
+			{
+				mini_stack.push(low);
+				mini_stack.push(part_index - 1);
+			}
 
-			mini_stack.push(part + 1);
-			mini_stack.push(high);
-			mini_stack.push(low);
-			mini_stack.push(part - 1);
+			if (part_index + 1 < high)
+			{
+				mini_stack.push(part_index + 1);
+				mini_stack.push(high);
+			}
 		}
 	}
 }
@@ -479,18 +487,21 @@ size_t BiggerSource::partition(std::string* toSort, size_t low, size_t high)
 {
 	std::string pivot = toSort[high];
 
-	size_t i = low;
+	size_t i = (low - 1);
 
-	for (size_t j = low + 1; j <= high - 1; j++)
+	for (size_t j = low; j <= high - 1; j++)
 	{
-		if (compare_isLess(toSort[j], pivot))
+		if (compare_isLess(toSort[j],pivot))
 		{
 			i++;
 			if (i != j)
 				swap(i, j);
 		}
 	}
-	swap(i + 1, high);
+
+	if (i + 1 != high)
+		swap(i + 1, high);
+
 	return (i + 1);
 }
 
@@ -498,9 +509,10 @@ size_t BiggerSource::partition(int * toSort, size_t low, size_t high)
 {
 	int pivot = toSort[high];
 
-	size_t i = low;
 
-	for (size_t j = low + 1; j <= high - 1; j++)
+	size_t i = (low - 1);
+
+	for (size_t j = low; j <= high - 1; j++)
 	{
 		if (toSort[j] <= pivot)
 		{
@@ -509,7 +521,10 @@ size_t BiggerSource::partition(int * toSort, size_t low, size_t high)
 				swap(i, j);
 		}
 	}
-	swap(i + 1, high);
+
+	if (i + 1 != high)
+		swap(i + 1, high);
+
 	return (i + 1);
 }
 
@@ -517,9 +532,10 @@ size_t BiggerSource::partition(long long * toSort, size_t low, size_t high)
 {
 	long long pivot = toSort[high];
 
-	size_t i = low;
 
-	for (size_t j = low + 1; j <= high - 1; j++)
+	size_t i = (low - 1);
+
+	for (size_t j = low; j <= high - 1; j++)
 	{
 		if (toSort[j] <= pivot)
 		{
@@ -528,7 +544,10 @@ size_t BiggerSource::partition(long long * toSort, size_t low, size_t high)
 				swap(i, j);
 		}
 	}
-	swap(i + 1, high);
+
+	if (i + 1 != high)
+		swap(i + 1, high);
+
 	return (i + 1);
 }
 

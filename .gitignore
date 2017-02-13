@@ -213,6 +213,8 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
+enc_temp_folder/
+
 # LightSwitch generated files
 GeneratedArtifacts/
 _Pvt_Extensions/
