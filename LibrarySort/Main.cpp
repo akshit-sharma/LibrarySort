@@ -107,7 +107,7 @@ int main(int argc, char ** argv)
 
 	sort_small = &f1;
 	sort_big = &f2;
-	
+	/*
 	runSort(source_obj, 2, sort_small);
 	runSort(big_source_obj, 3, sort_big);
 	
@@ -149,7 +149,7 @@ int main(int argc, char ** argv)
 	printf_stream(stdout, " %10s | %10s | %10.5lf | %10s | %10.5lf \n",
 		"shellsort", "InstiName", *sort_small, "rollnum.", *sort_big
 	);
-
+	*/
 	runSort(source_obj, 14, sort_small);
 	runSort(big_source_obj, 15, sort_big);
 

@@ -389,29 +389,49 @@ void Source::shellsort(int* toSort, size_t low, size_t high)
 
 void Source::bubblesort(std::string * toSort, size_t low, size_t high)
 {
-	long long i, j;
-	for (i = high; i > low; i--)
+
+	size_t i, j;
+	bool anySwap = false;
+
+	for (i = high; i > low; i--) {
+		anySwap = false;
 		for (j = low; j < i; j++)
 		{
-			if (compare_isLess(toSort[j], toSort[j + 1]))
-				break;
-			else
+			if (compare_isMore(toSort[j], toSort[j + 1]))
+			{
 				swap(j, j + 1);
+				anySwap = true;
+			}
+			else {
+				continue;
+			}
 		}
+		if (!anySwap)
+			break;
+	}
+
 
 }
 
 void Source::bubblesort(int * toSort, size_t low, size_t high)
 {
-	long long i, j;
-	for (i = high; i > low; i--)
+	size_t i, j;
+	bool anySwap = false;
+
+	for (i = high; i > low; i--){
+		anySwap = false;
 		for (j = low; j < i; j++)
 		{
-			if (toSort[j] < toSort[j + 1])
-				break;
-			else
+			if (toSort[j] <= toSort[j + 1])
+				continue;
+			else {
 				swap(j, j + 1);
+				anySwap = true;
+			}
 		}
+		if (!anySwap)
+			break;
+	}
 
 }
 
@@ -644,3 +664,32 @@ bool Source::compare_isLess(std::string str1, std::string str2)
 
 	return false;
 }
+
+bool Source::compare_isMore(std::string str1, std::string str2)
+{
+	size_t i;
+	size_t min_i;
+	i = 0;
+
+	min_i = std::min(str1.length(), str2.length());
+
+	while (i<min_i)
+	{
+		if (str1[i]<str2[i])
+		{
+			return false;
+		}
+		else if (str1[i]>str2[i])
+		{
+			return true;
+		}
+		++i;
+	}
+
+	if (str1.length() > str2.length())
+		return true;
+
+	return false;
+
+}
+

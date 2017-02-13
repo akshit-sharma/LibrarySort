@@ -47,6 +47,7 @@ private:
 	bool readFileToBuffer(std::string filePath, std::vector<unsigned char>& buffer);
 	void swap(size_t index_1, size_t index_2);
 	bool compare_isLess(std::string str1, std::string str2);
+	bool compare_isMore(std::string str1, std::string str2);
 	size_t partition(std::string * toSort, size_t low, size_t high);
 	size_t partition(long long * toSort, size_t low, size_t high);
 	size_t partition(int * toSort, size_t low, size_t high);
