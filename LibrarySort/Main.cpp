@@ -1,4 +1,3 @@
-﻿
 
 #include <fstream>
 #include <iomanip>
@@ -65,6 +64,7 @@ void runSort(main_class * source_obj, int value, double * timeTaken)
 
 int main(int argc, char ** argv)
 {
+  
 	if (argc != 4)
 	{
 		perror("Invalid parameter given");
@@ -108,14 +108,17 @@ int main(int argc, char ** argv)
 	sort_small = &f1;
 	sort_big = &f2;
 
+	printf("before pehla kaam\n");
 	runSort(source_obj, 2, sort_small);
+	printf("after pehla kaam\n");
 	runSort(big_source_obj, 3, sort_big);
+	printf("after doosra kaam\n");
 
 	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"quicksort", "paper_id", *sort_small, "paper_id", *sort_big
 	);
-	
-	runSort(source_obj, 4, sort_small);
+
+  runSort(source_obj, 4, sort_small);
 	runSort(big_source_obj, 5, sort_big);
 
 	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
@@ -149,6 +152,7 @@ int main(int argc, char ** argv)
 	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"shellsort", "InstiName", *sort_small, "rollnum.", *sort_big
 	);
+
 	
 	printf_stream(stdout, "\n");
 

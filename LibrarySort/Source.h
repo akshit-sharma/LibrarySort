@@ -55,6 +55,8 @@ private:
 	bool compare_isLess(std::string str1, std::string str2);
 	void shellsort(std::string* toSort, size_t low, size_t high);
 	void shellsort(int* toSort, size_t low, size_t high);
+	void bubblesort(std::string* toSort, size_t low, size_t high);
+	void bubblesort(int* toSort, size_t low, size_t high);
 
 public:
 	void MemAllo();
