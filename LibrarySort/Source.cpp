@@ -193,10 +193,10 @@ void Source::print_table(const char* file_name)
 	                         sorted_file_name.end(), "_sma_");
 
 	sorted_file_name += std::to_string(init_num);
+    sorted_file_name += ".csv";
 
 	fopen_stream(&p_file, file_name, "w");
 	fopen_stream(&single_col_file, sorted_file_name.c_str(), "w");
-	sorted_file_name += ".csv";
 
 	std::vector<std::string>::iterator iter;
 	for (iter = headers.begin();

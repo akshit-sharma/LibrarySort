@@ -14,7 +14,7 @@
 		fprintf(stream,fixed_string,##__VA_ARGS__)
 
 #define fopen_stream(stream,fixed_string,permissions)\
-		freopen(fixed_string,permissions,*stream)
+		*stream = fopen(fixed_string,permissions)
 
 #endif
 
