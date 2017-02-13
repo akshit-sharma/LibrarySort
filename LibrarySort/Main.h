@@ -1,4 +1,7 @@
 #pragma once
+
+#include "GlobalHeader.h"
+
 class main_class
 {
 public:

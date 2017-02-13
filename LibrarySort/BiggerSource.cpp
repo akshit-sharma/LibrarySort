@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <stack>
 
+int BiggerSource::init_num = 0;
 
 void BiggerSource::readFile(const char* file_name)
 {
@@ -42,6 +43,9 @@ void BiggerSource::readFile(const char* file_name)
                     continue;
                 }
 
+            if(line_number>=rows)
+                break;
+
                 if(line_number == 0)
                 {
                     if(*buffer_iter == ',' || *(buffer_iter+1)=='\0')
@@ -52,7 +56,7 @@ void BiggerSource::readFile(const char* file_name)
                             temp_var[index++] = *buffer_iter;
                             temp_var[index] = '\0';
                         }
-                        headers.push_back(temp_var);
+                        headers.push_back(std::string(temp_var));
                         index = 0;
                         continue;
                     }
@@ -72,34 +76,34 @@ void BiggerSource::readFile(const char* file_name)
                         scheme_prog_code[line_number-1] = (atoi(temp_var));
                         break;
                     case 1: //prepared_date
-						prepared_date[line_number - 1] = temp_var;
+						prepared_date[line_number - 1] = std::string(temp_var);
                         break;
                     case 2: //declared_date
-						declared_date[line_number - 1] = temp_var;
+						declared_date[line_number - 1] = std::string(temp_var);
                         break;
                     case 3: //prog_name
-						prog_name[line_number - 1] = temp_var;
+						prog_name[line_number - 1] = std::string(temp_var);
                         break;
                     case 4: //prog_sem_year
-						prog_sem_year[line_number - 1] = temp_var;
+						prog_sem_year[line_number - 1] = std::string(temp_var);
                         break;
                     case 5: //batch
                         batch[line_number-1] = (atoi(temp_var));
                         break;
                     case 6: //examination
-						examination[line_number - 1] = temp_var;
+						examination[line_number - 1] = std::string(temp_var);
                         break;
                     case 7: //institution_code
                         institution_code[line_number-1] = (atoi(temp_var));
                         break;
                     case 8: //institution_name
-						institution_name[line_number - 1] = temp_var;
+						institution_name[line_number - 1] = std::string(temp_var);
                         break;
                     case 9: //rollnumber
                         rollnumber[line_number-1] = (atoll(temp_var));
                         break;
                     case 10: //name
-						name[line_number - 1] = temp_var;
+						name[line_number - 1] = std::string(temp_var);
                         break;
                     case 11: //sid
                         sid[line_number-1] = (atoll(temp_var));
@@ -111,16 +115,16 @@ void BiggerSource::readFile(const char* file_name)
 						paper_id[line_number - 1] = atoi(temp_var);
 						break;
                     case 14: //credits
-						credits[line_number - 1] = temp_var;
+						credits[line_number - 1] = std::string(temp_var);
                         break;
                     case 15: //minor
-						minor[line_number - 1] = temp_var;
+						minor[line_number - 1] = std::string(temp_var);
                         break;
                     case 16: //major
-						major[line_number - 1] = temp_var;
+						major[line_number - 1] = std::string(temp_var);
                         break;
                     case 17: //total
-						total[line_number - 1] = temp_var;
+						total[line_number - 1] = std::string(temp_var);
                         break;
                     default:
                         break;
@@ -173,36 +177,59 @@ void BiggerSource::print_table(const char * file_name)
 {
 
     FILE * p_file;
+	FILE * single_col_file;
+	std::string sorted_file_name(file_name);
 
-    fopen_s(&p_file, file_name, "w");
+	sorted_file_name.replace(sorted_file_name.end() - 4,
+		sorted_file_name.end(), "_big_");
+
+	sorted_file_name += std::string(init_num+"");
+	sorted_file_name += ".csv";
+
+	fopen_stream(&p_file, file_name, "w");
+	fopen_stream(&single_col_file, sorted_file_name.c_str(), "w");
 
     std::vector<std::string>::iterator iter;
     for(iter = headers.begin();
         iter != headers.end(); ++iter){
             if(iter != headers.begin())
-                fprintf_s(p_file, ",");
-            fprintf_s(p_file,"%s",(*iter).c_str());
+                printf_stream(p_file, ",");
+            printf_stream(p_file,"%s",(*iter).c_str());
     }
 
-    fprintf_s(p_file,"\n");
+    printf_stream(p_file,"\n");
 
     for(size_t i=0; i < rows; i++){
-		fprintf_s(p_file, "%d,%s,%s,%s,%s,%d,%s,%d,%s,%lld,%s,%lld,%lld,%d,%s,%s,%s,%s\n",
+		printf_stream(p_file, "%d,%s,%s,%s,%s,%d,%s,%d,%s,%lld,%s,%lld,%lld,%d,%s,%s,%s,%s\n",
 			scheme_prog_code[i], prepared_date[i].c_str(), declared_date[i].c_str(), prog_name[i].c_str(),
 			prog_sem_year[i].c_str(), batch[i], examination[i].c_str(), institution_code[i], institution_name[i].c_str(),
 			rollnumber[i], name[i].c_str(), sid[i], result_scheme_id[i], paper_id[i], credits[i].c_str(), minor[i].c_str(),
 			major[i].c_str(), total[i].c_str());
-		//fprintf_s(p_file, "%s\n", name[i]);
+
+	    switch (sorted_col_type)
+	    {
+		case inte:
+			printf_stream(single_col_file, "%d\n", sorted_col_int[i]);
+			break;
+		case string:
+			printf_stream(single_col_file, "%s\n", sorted_col_string[i].c_str());
+			break;
+		case longe:
+			printf_stream(single_col_file, "%lld\n", sorted_col_long[i]);
+			break;
+	    }
+
     }
 
     fclose(p_file);
+	fclose(single_col_file);
 
 }
 
 void BiggerSource::MemAllo()
 {
     size_t colmns = 18;
-    rows = 3024380;
+    rows = 3024697;
 
     headers.reserve(colmns);
 
@@ -225,6 +252,8 @@ void BiggerSource::MemAllo()
     minor = new std::string[rows];
     major = new std::string[rows];
     total = new std::string[rows];
+
+	init_num++;
 
 }
 
@@ -258,27 +287,50 @@ void BiggerSource::MemFree()
 void BiggerSource::sort(int column)
 {
 
-	if (column == 1)
+	if (column == 1) {
 		quicksort(paper_id, 0, rows - 1);
-	if (column == 2)
+		sorted_col_int = paper_id;
+		sorted_col_type = inte;
+	}
+	if (column == 2) {
 		quicksort(name, 0, rows - 1);
-	if (column == 3)
+		sorted_col_string = name;
+		sorted_col_type = string;
+	}
+	if (column == 3) {
 		quicksort(rollnumber, 0, rows - 1);
-	if (column == 4)
+		sorted_col_long = rollnumber;
+		sorted_col_type = longe;
+	}
+	if (column == 4) {
 		shellsort(paper_id, 0, rows - 1);
-	if (column == 5)
+		sorted_col_int = paper_id;
+		sorted_col_type = inte;
+	}
+	if (column == 5) {
 		shellsort(name, 0, rows - 1);
-	if (column == 6)
+		sorted_col_string = name;
+		sorted_col_type = string;
+	}
+	if (column == 6) {
 		shellsort(rollnumber, 0, rows - 1);
+		sorted_col_long = rollnumber;
+		sorted_col_type = longe;
+	}
 
 }
 
 void BiggerSource::shellsort(std::string * toSort, size_t low, size_t high)
 {
-	long long i, j, k;
+	size_t i, j;
+	long long k;
+
+	size_t i_foot, j_foot, k_foot;
+
+	i_foot = j_foot = k_foot = 0;
 
 	for (i = (high + 1) / 2; i>0; i = i / 2)
-		for (j = i; j<high; j++)
+		for (j = i; j < high; j++) {
 			for (k = j - i; k >= 0; k = k - i)
 			{
 				if (compare_isLess(toSort[k], toSort[k + i]))
@@ -286,12 +338,14 @@ void BiggerSource::shellsort(std::string * toSort, size_t low, size_t high)
 				else
 					swap(k, k + i);
 			}
+		}
 
 }
 
 void BiggerSource::shellsort(long long * toSort, size_t low, size_t high)
 {
-	long long i, j, k;
+	size_t i, j;
+	long long k;
 
 	for (i = (high + 1) / 2; i>0; i = i / 2)
 		for (j = i; j<high; j++)
@@ -307,8 +361,9 @@ void BiggerSource::shellsort(long long * toSort, size_t low, size_t high)
 
 void BiggerSource::shellsort(int * toSort, size_t low, size_t high)
 {
-	long long i, j, k;
-
+	size_t i, j;
+	long long k;
+	
 	for (i = (high + 1) / 2; i>0; i = i / 2)
 		for (j = i; j<high; j++)
 			for (k = j - i; k >= 0; k = k - i)
@@ -371,8 +426,6 @@ void BiggerSource::bubblesort(int * toSort, size_t low, size_t high)
 
 void BiggerSource::quicksort(std::string * toSort, size_t low, size_t high)
 {
-
-	size_t part;
 	std::stack<size_t> mini_stack;
 
 	mini_stack.push(low);
@@ -389,24 +442,26 @@ void BiggerSource::quicksort(std::string * toSort, size_t low, size_t high)
 
 		if (low < high)
 		{
-			part = partition(toSort, low, high);
+			size_t part_index = partition(toSort, low, high);
 
-			//			quicksort(toSort, low, part - 1);
-			//			quicksort(toSort, part + 1, high);
+			if (low < part_index - 1 && part_index != 0)
+			{
+				mini_stack.push(low);
+				mini_stack.push(part_index - 1);
+			}
 
-			mini_stack.push(part + 1);
-			mini_stack.push(high);
-			mini_stack.push(low);
-			mini_stack.push(part - 1);
+			if (part_index + 1 < high)
+			{
+				mini_stack.push(part_index + 1);
+				mini_stack.push(high);
+			}
 
 		}
 	}
-
 }
+
 void BiggerSource::quicksort(long long * toSort, size_t low, size_t high)
 {
-
-	size_t part;
 	std::stack<size_t> mini_stack;
 
 	mini_stack.push(low);
@@ -423,16 +478,19 @@ void BiggerSource::quicksort(long long * toSort, size_t low, size_t high)
 
 		if (low < high)
 		{
-			part = partition(toSort, low, high);
+			size_t part_index = partition(toSort, low, high);
 
-			//			quicksort(toSort, low, part - 1);
-			//			quicksort(toSort, part + 1, high);
+			if (low < part_index - 1 && part_index != 0)
+			{
+				mini_stack.push(low);
+				mini_stack.push(part_index - 1);
+			}
 
-			mini_stack.push(part + 1);
-			mini_stack.push(high);
-			mini_stack.push(low);
-			mini_stack.push(part - 1);
-
+			if (part_index + 1 < high)
+			{
+				mini_stack.push(part_index + 1);
+				mini_stack.push(high);
+			}
 		}
 	}
 }
@@ -440,7 +498,6 @@ void BiggerSource::quicksort(long long * toSort, size_t low, size_t high)
 void BiggerSource::quicksort(int * toSort, size_t low, size_t high)
 {
 
-	size_t part;
 	std::stack<size_t> mini_stack;
 
 	mini_stack.push(low);
@@ -457,16 +514,19 @@ void BiggerSource::quicksort(int * toSort, size_t low, size_t high)
 
 		if (low < high)
 		{
-			part = partition(toSort, low, high);
+			size_t part_index = partition(toSort, low, high);
 
-			//			quicksort(toSort, low, part - 1);
-			//			quicksort(toSort, part + 1, high);
+			if (low < part_index - 1 && part_index != 0)
+			{
+				mini_stack.push(low);
+				mini_stack.push(part_index - 1);
+			}
 
-			mini_stack.push(part + 1);
-			mini_stack.push(high);
-			mini_stack.push(low);
-			mini_stack.push(part - 1);
-
+			if (part_index + 1 < high)
+			{
+				mini_stack.push(part_index + 1);
+				mini_stack.push(high);
+			}
 		}
 	}
 }
@@ -475,18 +535,21 @@ size_t BiggerSource::partition(std::string* toSort, size_t low, size_t high)
 {
 	std::string pivot = toSort[high];
 
-	size_t i = low;
+	size_t i = (low - 1);
 
-	for (size_t j = low + 1; j <= high - 1; j++)
+	for (size_t j = low; j <= high - 1; j++)
 	{
-		if (compare_isLess(toSort[j], pivot))
+		if (compare_isLess(toSort[j],pivot))
 		{
 			i++;
 			if (i != j)
 				swap(i, j);
 		}
 	}
-	swap(i + 1, high);
+
+	if (i + 1 != high)
+		swap(i + 1, high);
+
 	return (i + 1);
 }
 
@@ -494,9 +557,10 @@ size_t BiggerSource::partition(int * toSort, size_t low, size_t high)
 {
 	int pivot = toSort[high];
 
-	size_t i = low;
 
-	for (size_t j = low + 1; j <= high - 1; j++)
+	size_t i = (low - 1);
+
+	for (size_t j = low; j <= high - 1; j++)
 	{
 		if (toSort[j] <= pivot)
 		{
@@ -505,7 +569,10 @@ size_t BiggerSource::partition(int * toSort, size_t low, size_t high)
 				swap(i, j);
 		}
 	}
-	swap(i + 1, high);
+
+	if (i + 1 != high)
+		swap(i + 1, high);
+
 	return (i + 1);
 }
 
@@ -513,9 +580,10 @@ size_t BiggerSource::partition(long long * toSort, size_t low, size_t high)
 {
 	long long pivot = toSort[high];
 
-	size_t i = low;
 
-	for (size_t j = low + 1; j <= high - 1; j++)
+	size_t i = (low - 1);
+
+	for (size_t j = low; j <= high - 1; j++)
 	{
 		if (toSort[j] <= pivot)
 		{
@@ -524,7 +592,10 @@ size_t BiggerSource::partition(long long * toSort, size_t low, size_t high)
 				swap(i, j);
 		}
 	}
-	swap(i + 1, high);
+
+	if (i + 1 != high)
+		swap(i + 1, high);
+
 	return (i + 1);
 }
 

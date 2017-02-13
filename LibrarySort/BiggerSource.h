@@ -2,6 +2,7 @@
 
 #pragma once
 #include <vector>
+#include <string>
 #include "Main.h"
 
 class BiggerSource : public virtual main_class
@@ -28,11 +29,19 @@ private:
     std::string * minor;
     std::string * major;
     std::string * total;
-	
-    enum type{
-        inte, string
-    };
 
+	static int init_num;
+
+	std::string * sorted_col_string;
+	int * sorted_col_int;
+	long long * sorted_col_long;
+
+	enum type
+	{
+		inte, string, longe
+	};
+
+	enum type sorted_col_type;
     size_t rows;
 
 	bool readFileToBuffer(std::string filePath, std::vector<unsigned char>& buffer);

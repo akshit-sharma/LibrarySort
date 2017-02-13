@@ -1,9 +1,9 @@
-﻿
 
 #include <fstream>
-#include <vector>
 #include <iomanip>
-#include <algorithm>
+#include <string>
+
+#include <stdio.h>
 
 #include "Main.h"
 #include "BiggerSource.h"
@@ -14,7 +14,7 @@ BiggerSource bigsource;
 
 double small_times, big_times;
 double avg_read_times_small, avg_read_times_big;
-double quicksort_small, quicksort_big;
+double sort_duration;
 double avg_write_times_small, avg_write_times_big;
 
 const char * file_name_small;
@@ -33,7 +33,7 @@ void runSort(main_class * source_obj, int value, double * timeTaken)
 		source_obj->readFile(file_name_small);
 	else
 		source_obj->readFile(file_name_big);
-	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+	duration = (std::clock() - start) / static_cast<double> CLOCKS_PER_SEC;
 	if (value % 2 == 0)
 		avg_read_times_small += duration;
 	else
@@ -41,13 +41,13 @@ void runSort(main_class * source_obj, int value, double * timeTaken)
 
 	start = std::clock();
 	source_obj->sort(value/2);
-	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-	quicksort_small = duration;
+	duration = (std::clock() - start) / static_cast<double> CLOCKS_PER_SEC;
+	sort_duration = duration;
 
 	start = std::clock();
 	source_obj->print_table(output_file_name);
 	source_obj->MemFree();
-	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+	duration = (std::clock() - start) / static_cast<double> CLOCKS_PER_SEC;
 	if (value % 2 == 0)
 		avg_write_times_small += duration;
 	else
@@ -58,16 +58,13 @@ void runSort(main_class * source_obj, int value, double * timeTaken)
 	else
 		big_times++;
 
-	*timeTaken = quicksort_small;
+	*timeTaken = sort_duration;
 
 }
 
 int main(int argc, char ** argv)
 {
-	clock_t start;
-	double duration;
-
-
+  
 	if (argc != 4)
 	{
 		perror("Invalid parameter given");
@@ -91,9 +88,10 @@ int main(int argc, char ** argv)
 	big_times = 0;
 
 
-	fprintf_s(stdout, " %10s | %10s | %10s | %10s | %10s \n",
+	printf_stream(stdout, " %10s | %10s | %10s | %10s | %10s \n",
 		"technique", "colSmData", "timeTaken", "colBiData", "timeTaken"
 			);
+
 
 
 	main_class * source_obj = &source;
@@ -116,54 +114,55 @@ int main(int argc, char ** argv)
 	runSort(big_source_obj, 3, sort_big);
 	printf("after doosra kaam\n");
 
-	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"quicksort", "paper_id", *sort_small, "paper_id", *sort_big
 	);
-	/*
-	runSort(source_obj, 4, sort_small);
+
+  runSort(source_obj, 4, sort_small);
 	runSort(big_source_obj, 5, sort_big);
 
-	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"quicksort", "subjName", *sort_small, "name", *sort_big
 	);
 
 	runSort(source_obj, 6, sort_small);
 	runSort(big_source_obj, 7, sort_big);
 
-	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"quicksort", "InstiName", *sort_small, "rollnum.", *sort_big
 	);
 
 	runSort(source_obj, 8, sort_small);
 	runSort(big_source_obj, 9, sort_big);
 
-	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"shellsort", "paper_id", *sort_small, "paper_id", *sort_big
 	);
 
 	runSort(source_obj, 10, sort_small);
 	runSort(big_source_obj, 11, sort_big);
 
-	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"shellsort", "subjName", *sort_small, "name", *sort_big
 	);
 
 	runSort(source_obj, 12, sort_small);
 	runSort(big_source_obj, 13, sort_big);
 
-	fprintf_s(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
 		"shellsort", "InstiName", *sort_small, "rollnum.", *sort_big
 	);
-	*/
-	fprintf_s(stdout, "\n");
 
-	fprintf_s(stdout, "Avg small file read time %lf\n", (avg_read_times_small / small_times));
-	fprintf_s(stdout, "Avg big file read time %lf\n", (avg_read_times_big / big_times));
-	fprintf_s(stdout, "Avg small file write time %lf\n", (avg_write_times_small / small_times));
-	fprintf_s(stdout, "Avg big file write time %lf\n", (avg_write_times_big / big_times));
+	
+	printf_stream(stdout, "\n");
 
-	fprintf_s(stdout, "\n");
-	fprintf_s(stdout, "\n");
+	printf_stream(stdout, "Avg small file read time %lf\n", (avg_read_times_small / small_times));
+	printf_stream(stdout, "Avg big file read time %lf\n", (avg_read_times_big / big_times));
+	printf_stream(stdout, "Avg small file write time %lf\n", (avg_write_times_small / small_times));
+	printf_stream(stdout, "Avg big file write time %lf\n", (avg_write_times_big / big_times));
+
+	printf_stream(stdout, "\n");
+	printf_stream(stdout, "\n");
 
 	return 0;
 

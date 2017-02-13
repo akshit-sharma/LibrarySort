@@ -1,5 +1,6 @@
 
 #include <vector>
+#include <string>
 #include "Main.h"
 
 #pragma once
@@ -31,10 +32,17 @@ private:
 	std::string * max_marks;
 	std::string * pass_marks;
 
+	static int init_num;
+
+	std::string * sorted_col_string;
+	int * sorted_col_int;
+
 	enum type
 	{
 		inte, string
 	};
+
+	enum type sorted_col_type;
 
 	size_t rows;
 
@@ -58,4 +66,3 @@ public:
 	void MemFree();
 
 };
-
