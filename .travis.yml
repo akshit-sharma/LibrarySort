@@ -1,6 +1,6 @@
 language: cpp
 
-install: make cmake get-deps
+install: make get-deps
 
 before_script: 
     mkdir build && cd build
