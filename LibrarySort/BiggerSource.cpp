@@ -183,7 +183,7 @@ void BiggerSource::print_table(const char * file_name)
 	sorted_file_name.replace(sorted_file_name.end() - 4,
 		sorted_file_name.end(), "_big_");
 
-	sorted_file_name += std::string(init_num+"");
+	sorted_file_name += std::to_string(init_num);
 	sorted_file_name += ".csv";
 
 	fopen_stream(&p_file, file_name, "w");
