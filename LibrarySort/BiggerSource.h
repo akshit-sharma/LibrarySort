@@ -45,14 +45,14 @@ private:
     size_t rows;
 
 	bool readFileToBuffer(std::string filePath, std::vector<unsigned char>& buffer);
-	void quicksort(std::string * toSort, size_t low, size_t high);
-	size_t partition(std::string * toSort, size_t low, size_t high);
-	void quicksort(int * toSort, size_t low, size_t high);
-	size_t partition(int * toSort, size_t low, size_t high);
-	void quicksort(long long * toSort, size_t low, size_t high);
-	size_t partition(long long * toSort, size_t low, size_t high);
 	void swap(size_t index_1, size_t index_2);
 	bool compare_isLess(std::string str1, std::string str2);
+	size_t partition(std::string * toSort, size_t low, size_t high);
+	size_t partition(long long * toSort, size_t low, size_t high);
+	size_t partition(int * toSort, size_t low, size_t high);
+	void quicksort(int * toSort, size_t low, size_t high);
+	void quicksort(long long * toSort, size_t low, size_t high);
+	void quicksort(std::string * toSort, size_t low, size_t high);
 	void shellsort(std::string* toSort, size_t low, size_t high);
 	void shellsort(long long* toSort, size_t low, size_t high);
 	void shellsort(int* toSort, size_t low, size_t high);

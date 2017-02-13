@@ -317,6 +317,21 @@ void BiggerSource::sort(int column)
 		sorted_col_long = rollnumber;
 		sorted_col_type = longe;
 	}
+	if (column == 7) {
+		bubblesort(paper_id, 0, rows - 1);
+		sorted_col_int = paper_id;
+		sorted_col_type = inte;
+	}
+	if (column == 8) {
+		bubblesort(name, 0, rows - 1);
+		sorted_col_string = name;
+		sorted_col_type = string;
+	}
+	if (column == 9) {
+		bubblesort(rollnumber, 0, rows - 1);
+		sorted_col_long = rollnumber;
+		sorted_col_type = longe;
+	}
 
 }
 

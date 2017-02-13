@@ -333,6 +333,24 @@ void Source::sort(int column)
 		sorted_col_string = institution_name;
 		sorted_col_type = string;
 	}
+	if (column == 7)
+	{
+		bubblesort(paper_id, 0, rows - 1);
+		sorted_col_int = paper_id;
+		sorted_col_type = inte;
+	}
+	if (column == 8)
+	{
+		bubblesort(subject_name, 0, rows - 1);
+		sorted_col_string = subject_name;
+		sorted_col_type = string;
+	}
+	if (column == 9)
+	{
+		bubblesort(institution_name, 0, rows - 1);
+		sorted_col_string = institution_name;
+		sorted_col_type = string;
+	}
 }
 
 

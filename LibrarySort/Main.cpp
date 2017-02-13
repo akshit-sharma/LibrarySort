@@ -1,4 +1,4 @@
-
+﻿
 #include <fstream>
 #include <iomanip>
 #include <string>
@@ -107,50 +107,68 @@ int main(int argc, char ** argv)
 
 	sort_small = &f1;
 	sort_big = &f2;
-
-	printf("before pehla kaam\n");
+	
 	runSort(source_obj, 2, sort_small);
-	printf("after pehla kaam\n");
 	runSort(big_source_obj, 3, sort_big);
-	printf("after doosra kaam\n");
-
-	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	
+	printf_stream(stdout, " %10s | %10s | %10.5lf | %10s | %10.5lf \n",
 		"quicksort", "paper_id", *sort_small, "paper_id", *sort_big
 	);
 
   runSort(source_obj, 4, sort_small);
 	runSort(big_source_obj, 5, sort_big);
 
-	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %10.5lf | %10s | %10.5lf \n",
 		"quicksort", "subjName", *sort_small, "name", *sort_big
 	);
 
 	runSort(source_obj, 6, sort_small);
 	runSort(big_source_obj, 7, sort_big);
 
-	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %10.5lf | %10s | %10.5lf \n",
 		"quicksort", "InstiName", *sort_small, "rollnum.", *sort_big
 	);
 
 	runSort(source_obj, 8, sort_small);
 	runSort(big_source_obj, 9, sort_big);
 
-	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %10.5lf | %10s | %10.5lf \n",
 		"shellsort", "paper_id", *sort_small, "paper_id", *sort_big
 	);
 
 	runSort(source_obj, 10, sort_small);
 	runSort(big_source_obj, 11, sort_big);
 
-	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %10.5lf | %10s | %10.5lf \n",
 		"shellsort", "subjName", *sort_small, "name", *sort_big
 	);
 
 	runSort(source_obj, 12, sort_small);
 	runSort(big_source_obj, 13, sort_big);
 
-	printf_stream(stdout, " %10s | %10s | %5.5lf | %10s | %5.5lf \n",
+	printf_stream(stdout, " %10s | %10s | %10.5lf | %10s | %10.5lf \n",
 		"shellsort", "InstiName", *sort_small, "rollnum.", *sort_big
+	);
+
+	runSort(source_obj, 14, sort_small);
+	runSort(big_source_obj, 15, sort_big);
+
+	printf_stream(stdout, " %10s | %10s | %10.5lf | %10s | %10.5lf \n",
+		"bubblesort", "paper_id", *sort_small, "paper_id", *sort_big
+	);
+
+	runSort(source_obj, 16, sort_small);
+	runSort(big_source_obj, 17, sort_big);
+
+	printf_stream(stdout, " %10s | %10s | %10.5lf | %10s | %10.5lf \n",
+		"bubblesort", "subjName", *sort_small, "name", *sort_big
+	);
+
+	runSort(source_obj, 18, sort_small);
+	runSort(big_source_obj, 19, sort_big);
+
+	printf_stream(stdout, " %10s | %10s | %10.5lf | %10s | %10.5lf \n",
+		"bubblesort", "InstiName", *sort_small, "rollnum.", *sort_big
 	);
 
 	
