@@ -24,6 +24,9 @@
     <ClCompile Include="BiggerSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SchemeDataStructure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GlobalHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SchemeDataStructure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
