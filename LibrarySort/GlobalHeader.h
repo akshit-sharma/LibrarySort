@@ -6,7 +6,7 @@
 		fprintf_s(stream,fixed_string,##__VA_ARGS__)
 
 #define fopen_stream(stream,fixed_string,permissions)\
-		fopen_s(stream,fixed_string,permissions);
+		fopen_s(stream,fixed_string,permissions)
 
 #else
 
