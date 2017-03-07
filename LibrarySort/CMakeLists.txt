@@ -13,7 +13,7 @@ SET(SOURCES
         Main.h
         Source.h
         SchemeDataStructure.h
-        )
+        ResultsDataStructure.cpp ResultsDataStructure.h)
 
 add_executable(librarySort ${SOURCES})
 

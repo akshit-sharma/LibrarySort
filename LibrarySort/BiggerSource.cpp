@@ -31,6 +31,8 @@ void BiggerSource::readFile(const char* file_name)
 
     line_number = 0;
 
+    ResultDS(;);
+
     while(file.getline(line, 512, '\n')){
         category = 0;
         index = 0;
@@ -73,58 +75,58 @@ void BiggerSource::readFile(const char* file_name)
                 switch(category)
                     {
                     case 0: //scheme_prog_code
-                        scheme_prog_code[line_number-1] = (atoi(temp_var));
+                        scheme_prog_code = (atoi(temp_var));
                         break;
                     case 1: //prepared_date
-						prepared_date[line_number - 1] = std::string(temp_var);
+						prepared_date = std::string(temp_var);
                         break;
                     case 2: //declared_date
-						declared_date[line_number - 1] = std::string(temp_var);
+						declared_date = std::string(temp_var);
                         break;
                     case 3: //prog_name
-						prog_name[line_number - 1] = std::string(temp_var);
+						prog_name = std::string(temp_var);
                         break;
                     case 4: //prog_sem_year
-						prog_sem_year[line_number - 1] = std::string(temp_var);
+						prog_sem_year = std::string(temp_var);
                         break;
                     case 5: //batch
-                        batch[line_number-1] = (atoi(temp_var));
+                        batch = (atoi(temp_var));
                         break;
                     case 6: //examination
-						examination[line_number - 1] = std::string(temp_var);
+						examination = std::string(temp_var);
                         break;
                     case 7: //institution_code
-                        institution_code[line_number-1] = (atoi(temp_var));
+                        institution_code = (atoi(temp_var));
                         break;
                     case 8: //institution_name
-						institution_name[line_number - 1] = std::string(temp_var);
+						institution_name = std::string(temp_var);
                         break;
                     case 9: //rollnumber
-                        rollnumber[line_number-1] = (atoll(temp_var));
+                        rollnumber = (atoll(temp_var));
                         break;
                     case 10: //name
-						name[line_number - 1] = std::string(temp_var);
+						name = std::string(temp_var);
                         break;
                     case 11: //sid
-                        sid[line_number-1] = (atoll(temp_var));
+                        sid = (atoll(temp_var));
                         break;
                     case 12: //result_scheme_id
-                        result_scheme_id[line_number-1] = (atoll(temp_var));
+                        result_scheme_id = (atoll(temp_var));
                         break;
 					case 13:
-						paper_id[line_number - 1] = atoi(temp_var);
+						paper_id = atoi(temp_var);
 						break;
                     case 14: //credits
-						credits[line_number - 1] = std::string(temp_var);
+						credits = std::string(temp_var);
                         break;
                     case 15: //minor
-						minor[line_number - 1] = std::string(temp_var);
+						minor = std::string(temp_var);
                         break;
                     case 16: //major
-						major[line_number - 1] = std::string(temp_var);
+						major = std::string(temp_var);
                         break;
                     case 17: //total
-						total[line_number - 1] = std::string(temp_var);
+						total = std::string(temp_var);
                         break;
                     default:
                         break;
@@ -137,6 +139,20 @@ void BiggerSource::readFile(const char* file_name)
                 {
                     temp_var[index++] = *buffer_iter;
                 }
+
+            }
+
+            if(line_number!=0){
+
+                this->rollnumber[line_number-1] = rollnumber;
+                this->name[line_number-1] = std::string(name);
+                this->paper_id[line_number-1] = paper_id;
+
+                resultsDataStructure[line_number-1].modifyRDS(
+                      scheme_prog_code, prepared_date, declared_date, prog_name, prog_sem_year,
+                      batch, examination, institution_code, institution_name, rollnumber,
+                      name, sid, result_scheme_id, paper_id, credits, minor, major, total
+                );
 
             }
 
@@ -199,12 +215,21 @@ void BiggerSource::print_table(const char * file_name)
 
     printf_stream(p_file,"\n");
 
+    struct ResultsDSHolder resultsDSHolder;
+
     for(size_t i=0; i < rows; i++){
+
+        resultsDataStructure[i].getValue(&resultsDSHolder);
+
 		printf_stream(p_file, "%d,%s,%s,%s,%s,%d,%s,%d,%s,%lld,%s,%lld,%lld,%d,%s,%s,%s,%s\n",
-			scheme_prog_code[i], prepared_date[i].c_str(), declared_date[i].c_str(), prog_name[i].c_str(),
-			prog_sem_year[i].c_str(), batch[i], examination[i].c_str(), institution_code[i], institution_name[i].c_str(),
-			rollnumber[i], name[i].c_str(), sid[i], result_scheme_id[i], paper_id[i], credits[i].c_str(), minor[i].c_str(),
-			major[i].c_str(), total[i].c_str());
+			resultsDSHolder.scheme_prog_code, resultsDSHolder.prepared_date.c_str(),
+            resultsDSHolder.declared_date.c_str(), resultsDSHolder.prog_name.c_str(),
+			resultsDSHolder.prog_sem_year.c_str(), resultsDSHolder.batch,
+            resultsDSHolder.examination.c_str(), resultsDSHolder.institution_code,
+            resultsDSHolder.institution_name.c_str(), resultsDSHolder.rollnumber,
+            resultsDSHolder.name.c_str(), resultsDSHolder.sid, resultsDSHolder.result_scheme_id,
+            resultsDSHolder.paper_id, resultsDSHolder.credits.c_str(), resultsDSHolder.minor.c_str(),
+			resultsDSHolder.major.c_str(), resultsDSHolder.total.c_str());
 
 	    switch (sorted_col_type)
 	    {
@@ -229,29 +254,15 @@ void BiggerSource::print_table(const char * file_name)
 void BiggerSource::MemAllo()
 {
     size_t colmns = 18;
-    rows = 3024697;
+    rows = ResultsDataStructure::MAX_SIZE;
 
     headers.reserve(colmns);
 
-    scheme_prog_code = new int[rows];
-    batch = new int[rows];
-    institution_code = new int[rows];
 	paper_id = new int[rows];
     rollnumber = new long long[rows];
-    sid = new long long[rows];
-    result_scheme_id = new long long[rows];
-
-    prepared_date = new std::string[rows];
-    declared_date = new std::string[rows];
-    prog_name = new std::string[rows];
-    prog_sem_year = new std::string[rows];
-    examination = new std::string[rows];
-    institution_name = new std::string[rows];
     name = new std::string[rows];
-    credits = new std::string[rows];
-    minor = new std::string[rows];
-    major = new std::string[rows];
-    total = new std::string[rows];
+
+    resultsDataStructure = new ResultsDataStructure[rows];
 
 	init_num++;
 
@@ -262,25 +273,11 @@ void BiggerSource::MemFree()
 
     headers.clear();
 
-    delete [] scheme_prog_code;
-    delete [] batch;
-    delete [] institution_code;
 	delete [] paper_id;
     delete [] rollnumber;
-    delete [] sid;
-    delete [] result_scheme_id;
-
-    delete [] prepared_date;
-    delete [] declared_date;
-    delete [] prog_name;
-    delete [] prog_sem_year;
-    delete [] examination;
-    delete [] institution_name;
     delete [] name;
-    delete [] credits;
-    delete [] minor;
-    delete [] major;
-    delete [] total;
+
+    delete [] resultsDataStructure;
 
 }
 
@@ -645,48 +642,15 @@ size_t BiggerSource::partition(long long * toSort, size_t low, size_t high)
 
 void BiggerSource::swap(size_t index_1, size_t index_2)
 {
+
     int temp_int;
     long long temp_long;
 	std::string t_string;
+    ResultsDataStructure t_resultsDataStructure;
 
-    temp_int = scheme_prog_code[index_1];
-    scheme_prog_code[index_1] = scheme_prog_code[index_2];
-    scheme_prog_code[index_2] = temp_int;
-
-	t_string = prepared_date[index_1];
-	prepared_date[index_1] = prepared_date[index_2];
-	prepared_date[index_2] = t_string;
-
-
-	t_string = declared_date[index_1];
-	declared_date[index_1] = declared_date[index_2];
-	declared_date[index_2] = t_string;
-    
-
-	t_string = prog_name[index_1];
-	prog_name[index_1] = prog_name[index_2];
-	prog_name[index_2] = t_string;
-    
-
-	t_string = prog_sem_year[index_1];
-	prog_sem_year[index_1] = prog_sem_year[index_2];
-	prog_sem_year[index_2] = t_string;
-
-    temp_int = batch[index_1];
-    batch[index_1] = batch[index_2];
-    batch[index_2] = temp_int;
-
-	t_string = examination[index_1];
-	examination[index_1] = examination[index_2];
-	examination[index_2] = t_string;
-
-    temp_int = institution_code[index_1];
-    institution_code[index_1] = institution_code[index_2];
-    institution_code[index_2] = temp_int;
-
-	t_string = institution_name[index_1];
-	institution_name[index_1] = institution_name[index_2];
-	institution_name[index_2] = t_string;
+    temp_int = paper_id[index_1];
+    paper_id[index_1] = paper_id[index_2];
+    paper_id[index_2] = temp_int;
 
     temp_long = rollnumber[index_1];
     rollnumber[index_1] = rollnumber[index_2];
@@ -696,33 +660,7 @@ void BiggerSource::swap(size_t index_1, size_t index_2)
 	name[index_1] = name[index_2];
 	name[index_2] = t_string;
 
-    temp_long = sid[index_1];
-    sid[index_1] = sid[index_2];
-    sid[index_2] = temp_long;
-
-    temp_long = result_scheme_id[index_1];
-    result_scheme_id[index_1] = result_scheme_id[index_2];
-    result_scheme_id[index_2] = temp_long;
-
-	temp_int = paper_id[index_1];
-	paper_id[index_1] = paper_id[index_2];
-	paper_id[index_2] = temp_int;
-
-	t_string = credits[index_1];
-	credits[index_1] = credits[index_2];
-	credits[index_2] = t_string;
-
-	t_string = minor[index_1];
-	minor[index_1] = minor[index_2];
-	minor[index_2] = t_string;
-
-	t_string = major[index_1];
-	major[index_1] = major[index_2];
-	major[index_2] = t_string;
-
-	t_string = total[index_1];
-	total[index_1] = total[index_2];
-	total[index_2] = t_string;
+    ResultsDataStructure::swap(&resultsDataStructure[index_1], &resultsDataStructure[index_2]);
 
 }
 

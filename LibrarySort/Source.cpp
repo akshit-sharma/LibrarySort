@@ -556,6 +556,7 @@ void Source::swap(const size_t index_1, const size_t index_2)
 
 	int temp;
     std::string t_string;
+    SchemeDataStructure t_schemeDataStructure;
 
     temp = paper_id[index_1];
 	paper_id[index_1] = paper_id[index_2];

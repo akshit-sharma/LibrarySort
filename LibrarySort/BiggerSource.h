@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "Main.h"
+#include "ResultsDataStructure.h"
 
 class BiggerSource : public virtual main_class
 {
@@ -11,24 +12,11 @@ private:
 
     std::vector<std::string> headers;
 
-    int * scheme_prog_code;
-    std::string * prepared_date;
-    std::string * declared_date;
-    std::string * prog_name;
-    std::string * prog_sem_year;
-    int * batch;
-    std::string * examination;
-    int * institution_code;
-    std::string * institution_name;
     long long * rollnumber;
     std::string * name;
-    long long * sid;
-    long long * result_scheme_id;
 	int * paper_id;
-    std::string * credits;
-    std::string * minor;
-    std::string * major;
-    std::string * total;
+
+    ResultsDataStructure * resultsDataStructure;
 
 	static int init_num;
 
