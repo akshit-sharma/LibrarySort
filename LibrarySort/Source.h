@@ -16,7 +16,7 @@ private:
 	int * paper_id;
 	std::string * subject_name;
 
-    SchemeDataStructure schemeDataStructure;
+    SchemeDataStructure * schemeDataStructure;
 
 	static int init_num;
 

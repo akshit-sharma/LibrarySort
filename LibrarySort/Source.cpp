@@ -164,7 +164,7 @@ void Source::readFile(const char* file_name)
             this->paper_id[line_number - 1] = paper_id;
             this->subject_name[line_number - 1] = std::string(subject_name);
 
-            schemeDataStructure.modifySDS(
+            schemeDataStructure[line_number-1].modifySDS(
                     scheme_prog_code, prog_name, scheme_id, prog_sem_year,
                     prepared_date, declared_date, institution_code,
                     institution_name, s_number, paper_id, paper_code,
@@ -235,7 +235,7 @@ void Source::print_table(const char* file_name)
 	for (size_t i = 0; i < rows; i++)
 	{
 
-        schemeDataStructure.getValue(&schemeDSHolder, i);
+        schemeDataStructure[i].getValue(&schemeDSHolder);
 
 		printf_stream(p_file, "%d,%s,%lld,%s,%s,%s,%d,%s,%d,%d,%s,%s,%d,%s,%s,%s,%s,%s,%s,%s,%s\n",
             schemeDSHolder.scheme_prog_code, schemeDSHolder.prog_name.c_str(), schemeDSHolder.scheme_id, schemeDSHolder.prog_sem_year.c_str(),
@@ -265,7 +265,7 @@ void Source::print_table(const char* file_name)
 void Source::MemAllo()
 {
 	size_t colmns = 21;
-	rows = schemeDataStructure.MAX_SIZE;
+	rows = SchemeDataStructure::MAX_SIZE;
 
 	headers.reserve(colmns);
 
@@ -273,7 +273,7 @@ void Source::MemAllo()
 	institution_name = new std::string[rows];
 	subject_name = new std::string[rows];
 
-    schemeDataStructure.MemAllo();
+    schemeDataStructure = new SchemeDataStructure[rows];
 
 	init_num++;
 
@@ -283,11 +283,11 @@ void Source::MemFree()
 {
 	headers.clear();
 
-    schemeDataStructure.MemFree();
-
 	delete [] (institution_name);
 	delete [] (paper_id);
 	delete [] (subject_name);
+
+    delete [] (schemeDataStructure);
 
 }
 
@@ -569,73 +569,7 @@ void Source::swap(const size_t index_1, const size_t index_2)
     institution_name[index_1] = institution_name[index_2];
     institution_name[index_2] = t_string;
 
-    schemeDataStructure.swap(index_1, index_2);
-
-/*
-	temp = scheme_prog_code[index_1];
-	scheme_prog_code[index_1] = scheme_prog_code[index_2];
-	scheme_prog_code[index_2] = temp;
-
-	temp = institution_code[index_1];
-	institution_code[index_1] = institution_code[index_2];
-	institution_code[index_2] = temp;
-
-	temp = s_number[index_1];
-	s_number[index_1] = s_number[index_2];
-	s_number[index_2] = temp;
-
-	temp = credits[index_1];
-	credits[index_1] = credits[index_2];
-	credits[index_2] = temp;
-
-	t_string = paper_code[index_1];
-	paper_code[index_1] = paper_code[index_2];
-	paper_code[index_2] = t_string;
-
-	t_string = prog_name[index_1];
-	prog_name[index_1] = prog_name[index_2];
-	prog_name[index_2] = t_string;
-
-	t_string = prog_sem_year[index_1];
-	prog_sem_year[index_1] = prog_sem_year[index_2];
-	prog_sem_year[index_2] = t_string;
-
-	t_string = declared_date[index_1];
-	declared_date[index_1] = declared_date[index_2];
-	declared_date[index_2] = t_string;
-
-	t_string = type[index_1];
-	type[index_1] = type[index_2];
-	type[index_2] = t_string;
-
-	t_string = exam[index_1];
-	exam[index_1] = exam[index_2];
-	exam[index_2] = t_string;
-
-	t_string = mode[index_1];
-	mode[index_1] = mode[index_2];
-	mode[index_2] = t_string;
-
-	t_string = kind[index_1];
-	kind[index_1] = kind[index_2];
-	kind[index_2] = t_string;
-
-	t_string = minor[index_1];
-	minor[index_1] = minor[index_2];
-	minor[index_2] = t_string;
-
-	t_string = major[index_1];
-	major[index_1] = major[index_2];
-	major[index_2] = t_string;
-
-	t_string = max_marks[index_1];
-	max_marks[index_1] = max_marks[index_2];
-	max_marks[index_2] = t_string;
-
-	t_string = pass_marks[index_1];
-	pass_marks[index_1] = pass_marks[index_2];
-	pass_marks[index_2] = t_string;
-     */
+    SchemeDataStructure::swap(&schemeDataStructure[index_1], &schemeDataStructure[index_2]);
 
 }
 
