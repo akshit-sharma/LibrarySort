@@ -554,25 +554,14 @@ size_t Source::partition(std::string* toSort, size_t low, size_t high)
 void Source::swap(const size_t index_1, const size_t index_2)
 {
 
-	int temp;
+	int t_int;
     std::string t_string;
     SchemeDataStructure t_schemeDataStructure;
 
-    temp = paper_id[index_1];
-	paper_id[index_1] = paper_id[index_2];
-	paper_id[index_2] = temp;
-
-    t_string = subject_name[index_1];
-    subject_name[index_1] = subject_name[index_2];
-    subject_name[index_2] = t_string;
-
-    t_string = institution_name[index_1];
-    institution_name[index_1] = institution_name[index_2];
-    institution_name[index_2] = t_string;
-
-    t_schemeDataStructure = schemeDataStructure[index_1];
-    schemeDataStructure[index_1] = schemeDataStructure[index_2];
-    schemeDataStructure[index_2] = t_schemeDataStructure;
+    SWAP(t_int, index_1, index_2, paper_id);
+    SWAP(t_string, index_1, index_2, subject_name);
+    SWAP(t_string, index_1, index_2, institution_name);
+    SWAP(t_schemeDataStructure, index_1, index_2, schemeDataStructure);
 
 }
 

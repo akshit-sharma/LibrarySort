@@ -7,10 +7,10 @@
 
 #include <string>
 
-#define SWAP(type, var_1, var_2, what) \
-	type = var_1->what;	\
-	var_1->what = var_2->what;	\
-	var_2->what = type;
+#define SWAP(type, var_1, var_2, data_member)        \
+	type = data_member[var_1];	                     \
+	data_member[var_1] = data_member[var_2];	     \
+	data_member[var_2] = type;
 
 #define ResultDS(delimiter)                                 \
     int scheme_prog_code delimiter                                   \
@@ -46,7 +46,6 @@ class ResultsDataStructure {
 public:
     static const size_t MAX_SIZE = 3024348;
 
-    static void swap(ResultsDataStructure * scheme_1, ResultsDataStructure * scheme_2);
     void modifyRDS(
             int scheme_prog_code,
             std::string prepared_date,

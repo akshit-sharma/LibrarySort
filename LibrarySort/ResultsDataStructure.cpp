@@ -4,32 +4,6 @@
 
 #include "ResultsDataStructure.h"
 
-void ResultsDataStructure::swap(ResultsDataStructure * result_1, ResultsDataStructure * result_2)
-{
-    int t_int;
-    long long t_long;
-    std::string t_string;
-
-    SWAP(t_int, result_1, result_2, scheme_prog_code);
-    SWAP(t_string, result_1, result_2, prepared_date);
-    SWAP(t_string, result_1, result_2, declared_date);
-    SWAP(t_string, result_1, result_2, prog_name);
-    SWAP(t_string, result_1, result_2, prog_sem_year);
-    SWAP(t_int, result_1, result_2, batch);
-    SWAP(t_string, result_1, result_2, examination);
-    SWAP(t_int, result_1, result_2, institution_code);
-    SWAP(t_string, result_1, result_2, institution_name);
-    SWAP(t_long, result_1, result_2, rollnumber);
-    SWAP(t_string, result_1, result_2, name);
-    SWAP(t_long, result_1, result_2, sid);
-    SWAP(t_long, result_1, result_2, result_scheme_id);
-    SWAP(t_long, result_1, result_2, paper_id);
-    SWAP(t_string, result_1, result_2, credits);
-    SWAP(t_string, result_1, result_2, minor);
-    SWAP(t_string, result_1, result_2, major);
-    SWAP(t_string, result_1, result_2, total);
-}
-
 void ResultsDataStructure::modifyRDS(
         int scheme_prog_code, std::string prepared_date, std::string declared_date,
         std::string prog_name, std::string prog_sem_year, int batch,

@@ -1,35 +1,4 @@
 ﻿#include "SchemeDataStructure.h"
-#include "GlobalHeader.h"
-
-void SchemeDataStructure::swap(SchemeDataStructure * scheme_1, SchemeDataStructure * scheme_2){
-
-    int t_int;
-    long long t_long;
-    std::string t_string;
-
-    SWAP(t_int, scheme_1, scheme_2, scheme_prog_code);
-    SWAP(t_string, scheme_1, scheme_2, prog_name);
-    SWAP(t_long, scheme_1, scheme_2, scheme_id);
-    SWAP(t_string, scheme_1, scheme_2, prog_sem_year);
-    SWAP(t_string, scheme_1, scheme_2, prepared_date);
-    SWAP(t_string, scheme_1, scheme_2, declared_date);
-    SWAP(t_int, scheme_1, scheme_2, institution_code);
-    SWAP(t_string, scheme_1, scheme_2, institution_name);
-    SWAP(t_int, scheme_1, scheme_2, s_number);
-    SWAP(t_int, scheme_1, scheme_2, paper_id);
-    SWAP(t_string, scheme_1, scheme_2, paper_code);
-    SWAP(t_string, scheme_1, scheme_2, subject_name);
-    SWAP(t_int, scheme_1, scheme_2, credits);
-    SWAP(t_string, scheme_1, scheme_2, type);
-    SWAP(t_string, scheme_1, scheme_2, exam);
-    SWAP(t_string, scheme_1, scheme_2, mode);
-    SWAP(t_string, scheme_1, scheme_2, kind);
-    SWAP(t_string, scheme_1, scheme_2, minor);
-    SWAP(t_string, scheme_1, scheme_2, major);
-    SWAP(t_string, scheme_1, scheme_2, max_marks);
-    SWAP(t_string, scheme_1, scheme_2, pass_marks);
-
-}
 
 void SchemeDataStructure::modifySDS(
         int scheme_prog_code, std::string prog_name, long long scheme_id, std::string prog_sem_year,

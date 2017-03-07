@@ -1,10 +1,11 @@
 ﻿#pragma once
 #include <string>
 
-#define SWAP(type, var_1, var_2, what) \
-	type = var_1->what;	\
-	var_1->what = var_2->what;	\
-	var_2->what = type;
+
+#define SWAP(type, var_1, var_2, data_member)        \
+	type = data_member[var_1];	                     \
+	data_member[var_1] = data_member[var_2];	     \
+	data_member[var_2] = type;
 
 struct SchemeDSHolder{
 	int scheme_prog_code;
@@ -57,7 +58,6 @@ class SchemeDataStructure
 public:
     static const size_t MAX_SIZE = 247659;
 
-    static void swap(SchemeDataStructure * scheme_1, SchemeDataStructure * scheme_2);
 	void modifySDS(
 			int scheme_prog_code, std::string prog_name, long long scheme_id, std::string prog_sem_year,
 			std::string prepared_date, std::string declared_date, int institution_code,

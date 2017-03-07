@@ -648,21 +648,10 @@ void BiggerSource::swap(size_t index_1, size_t index_2)
 	std::string t_string;
     ResultsDataStructure t_resultsDataStructure;
 
-    temp_int = paper_id[index_1];
-    paper_id[index_1] = paper_id[index_2];
-    paper_id[index_2] = temp_int;
-
-    temp_long = rollnumber[index_1];
-    rollnumber[index_1] = rollnumber[index_2];
-    rollnumber[index_2]  = temp_long;
-
-	t_string = name[index_1];
-	name[index_1] = name[index_2];
-	name[index_2] = t_string;
-
-    t_resultsDataStructure = resultsDataStructure[index_1];
-    resultsDataStructure[index_1] = resultsDataStructure[index_2];
-    resultsDataStructure[index_2] = t_resultsDataStructure;
+    SWAP(temp_int, index_1, index_2, paper_id);
+    SWAP(temp_long, index_1, index_2, rollnumber);
+    SWAP(t_string, index_1, index_2, name);
+    SWAP(t_resultsDataStructure, index_1, index_2, resultsDataStructure);
 
 }
 
