@@ -8,9 +8,11 @@ SET(SOURCES
         Main.cpp
         Source.cpp
         BiggerSource.cpp
+        SchemeDataStructure.cpp
         BiggerSource.h
         Main.h
         Source.h
+        SchemeDataStructure.h
         )
 
 add_executable(librarySort ${SOURCES})

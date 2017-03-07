@@ -18,6 +18,13 @@ void Source::readFile(const char* file_name)
 	int line_number;
 	int category;
 
+    int scheme_prog_code; std::string prog_name; long long scheme_id; std::string prog_sem_year;
+    std::string prepared_date; std::string declared_date; int institution_code;
+    std::string institution_name;	int s_number;	int paper_id;	std::string paper_code;
+    std::string subject_name;	int credits; std::string type; std::string exam; std::string mode;
+    std::string kind;	std::string minor; std::string major; std::string max_marks; std::string pass_marks;
+
+
     for(index=0;index<128;index++)
         temp_var[index] = '\0';
 
@@ -77,67 +84,67 @@ void Source::readFile(const char* file_name)
 				switch (category)
 				{
 				case 0:
-					scheme_prog_code[line_number - 1] = (atoi(temp_var));
+					scheme_prog_code = (atoi(temp_var));
 					break;
 				case 1:
-					prog_name[line_number - 1] = std::string(temp_var);
+					prog_name = std::string(temp_var);
 					break;
 				case 2:
-					scheme_id[line_number - 1] = (atoi(temp_var));
+					scheme_id = (atoll(temp_var));
 					break;
 				case 3:
-					prog_sem_year[line_number - 1] = std::string(temp_var);
+					prog_sem_year = std::string(temp_var);
 					break;
 				case 4:
-					prepared_date[line_number - 1] = std::string(temp_var);
+					prepared_date = std::string(temp_var);
 					break;
 				case 5:
-					declared_date[line_number - 1] = std::string(temp_var);
+					declared_date = std::string(temp_var);
 					break;
 				case 6:
-					institution_code[line_number - 1] = (atoi(temp_var));
+					institution_code = (atoi(temp_var));
 					break;
 				case 7:
-					institution_name[line_number - 1] = std::string(temp_var);
+					institution_name = std::string(temp_var);
 					break;
 				case 8:
-					s_number[line_number - 1] = (atoi(temp_var));
+					s_number = (atoi(temp_var));
 					break;
 				case 9:
-					paper_id[line_number - 1] = (atoi((temp_var)));
+					paper_id = (atoi((temp_var)));
 					break;
 				case 10:
-					paper_code[line_number - 1] = std::string(temp_var);
+					paper_code = std::string(temp_var);
 					break;
 				case 11:
-					subject_name[line_number - 1] = std::string(temp_var);
+					subject_name = std::string(temp_var);
 					break;
 				case 12:
-					credits[line_number - 1] = (atoi(temp_var));
+					credits = (atoi(temp_var));
 					break;
 				case 13:
-					type[line_number - 1] = std::string(temp_var);
+					type = std::string(temp_var);
 					break;
 				case 14:
-					exam[line_number - 1] = std::string(temp_var);
+					exam = std::string(temp_var);
 					break;
 				case 15:
-					mode[line_number - 1] = std::string(temp_var);
+					mode = std::string(temp_var);
 					break;
 				case 16:
-					kind[line_number - 1] = std::string(temp_var);
+					kind = std::string(temp_var);
 					break;
 				case 17:
-					minor[line_number - 1] = std::string(temp_var);
+					minor = std::string(temp_var);
 					break;
 				case 18:
-					major[line_number - 1] = std::string(temp_var);
+					major = std::string(temp_var);
 					break;
 				case 19:
-					max_marks[line_number - 1] = std::string(temp_var);
+					max_marks = std::string(temp_var);
 					break;
 				case 20:
-					pass_marks[line_number - 1] = std::string(temp_var);
+					pass_marks = std::string(temp_var);
 					break;
 				default:
 					break;
@@ -151,6 +158,20 @@ void Source::readFile(const char* file_name)
 				temp_var[index++] = *buffer_iter;
 			}
 		}
+
+        if(line_number != 0) {
+            this->institution_name[line_number - 1] = std::string(institution_name);
+            this->paper_id[line_number - 1] = paper_id;
+            this->subject_name[line_number - 1] = std::string(subject_name);
+
+            schemeDataStructure.modifySDS(
+                    scheme_prog_code, prog_name, scheme_id, prog_sem_year,
+                    prepared_date, declared_date, institution_code,
+                    institution_name, s_number, paper_id, paper_code,
+                    subject_name, credits, type, exam, mode,
+                    kind, minor, major, max_marks, pass_marks
+            );
+        }
 
 		line_number++;
 	}
@@ -209,13 +230,19 @@ void Source::print_table(const char* file_name)
 
 	printf_stream(p_file,"\n");
 
+    struct SchemeDSHolder schemeDSHolder;
+
 	for (size_t i = 0; i < rows; i++)
 	{
-		printf_stream(p_file, "%d,%s,%d,%s,%s,%s,%d,%s,%d,%d,%s,%s,%d,%s,%s,%s,%s,%s,%s,%s,%s\n",
-			scheme_prog_code[i], prog_name[i].c_str(), scheme_id[i], prog_sem_year[i].c_str(),
-			prepared_date[i].c_str(), declared_date[i].c_str(), institution_code[i], institution_name[i].c_str(), s_number[i],
-			paper_id[i], paper_code[i].c_str(), subject_name[i].c_str(), credits[i], type[i].c_str(), exam[i].c_str(), mode[i].c_str(), kind[i].c_str(), minor[i].c_str(), major[i].c_str(), max_marks[i].c_str(), pass_marks[i].c_str())
 
+        schemeDataStructure.getValue(&schemeDSHolder, i);
+
+		printf_stream(p_file, "%d,%s,%lld,%s,%s,%s,%d,%s,%d,%d,%s,%s,%d,%s,%s,%s,%s,%s,%s,%s,%s\n",
+            schemeDSHolder.scheme_prog_code, schemeDSHolder.prog_name.c_str(), schemeDSHolder.scheme_id, schemeDSHolder.prog_sem_year.c_str(),
+            schemeDSHolder.prepared_date.c_str(), schemeDSHolder.declared_date.c_str(), schemeDSHolder.institution_code, schemeDSHolder.institution_name.c_str(),
+            schemeDSHolder.s_number, schemeDSHolder.paper_id, schemeDSHolder.paper_code.c_str(), schemeDSHolder.subject_name.c_str(), schemeDSHolder.credits,
+            schemeDSHolder.type.c_str(), schemeDSHolder.exam.c_str(), schemeDSHolder.mode.c_str(), schemeDSHolder.kind.c_str(),
+            schemeDSHolder.minor.c_str(), schemeDSHolder.major.c_str(), schemeDSHolder.max_marks.c_str(), schemeDSHolder.pass_marks.c_str())
 		;
 
 		switch (sorted_col_type)
@@ -238,61 +265,30 @@ void Source::print_table(const char* file_name)
 void Source::MemAllo()
 {
 	size_t colmns = 21;
-	rows = 247694;
+	rows = schemeDataStructure.MAX_SIZE;
 
 	headers.reserve(colmns);
 
-	scheme_prog_code = new int [rows];
-	scheme_id = new int[rows];
-	institution_code = new int[rows];
-	s_number = new int[rows];
 	paper_id = new int[rows];
-	credits = new int[rows];
-
-	prog_name = new std::string[rows];
-	prog_sem_year = new std::string[rows];
-	prepared_date = new std::string[rows];
-	declared_date = new std::string[rows];
 	institution_name = new std::string[rows];
-	paper_code = new std::string[rows];
 	subject_name = new std::string[rows];
-	type = new std::string[rows];
-	exam = new std::string[rows];
-	mode = new std::string[rows];
-	kind = new std::string[rows];
-	minor = new std::string[rows];
-	major = new std::string[rows];
-	max_marks = new std::string[rows];
-	pass_marks = new std::string[rows];
+
+    schemeDataStructure.MemAllo();
 
 	init_num++;
+
 }
 
 void Source::MemFree()
 {
 	headers.clear();
 
-	delete [] (scheme_prog_code);
-	delete [] (prog_name);
-	delete [] (scheme_id);
-	delete [] (prog_sem_year);
-	delete [] (prepared_date);
-	delete [] (declared_date);
-	delete [] (institution_code);
+    schemeDataStructure.MemFree();
+
 	delete [] (institution_name);
-	delete [] (s_number);
 	delete [] (paper_id);
-	delete [] (paper_code);
 	delete [] (subject_name);
-	delete [] (credits);
-	delete [] (type);
-	delete [] (exam);
-	delete [] (mode);
-	delete [] (kind);
-	delete [] (minor);
-	delete [] (major);
-	delete [] (max_marks);
-	delete [] (pass_marks);
+
 }
 
 void Source::sort(int column)
@@ -557,12 +553,25 @@ size_t Source::partition(std::string* toSort, size_t low, size_t high)
 
 void Source::swap(const size_t index_1, const size_t index_2)
 {
-	int temp;
 
-	temp = paper_id[index_1];
+	int temp;
+    std::string t_string;
+
+    temp = paper_id[index_1];
 	paper_id[index_1] = paper_id[index_2];
 	paper_id[index_2] = temp;
 
+    t_string = subject_name[index_1];
+    subject_name[index_1] = subject_name[index_2];
+    subject_name[index_2] = t_string;
+
+    t_string = institution_name[index_1];
+    institution_name[index_1] = institution_name[index_2];
+    institution_name[index_2] = t_string;
+
+    schemeDataStructure.swap(index_1, index_2);
+
+/*
 	temp = scheme_prog_code[index_1];
 	scheme_prog_code[index_1] = scheme_prog_code[index_2];
 	scheme_prog_code[index_2] = temp;
@@ -579,8 +588,6 @@ void Source::swap(const size_t index_1, const size_t index_2)
 	credits[index_1] = credits[index_2];
 	credits[index_2] = temp;
 
-	std::string t_string;
-
 	t_string = paper_code[index_1];
 	paper_code[index_1] = paper_code[index_2];
 	paper_code[index_2] = t_string;
@@ -596,14 +603,6 @@ void Source::swap(const size_t index_1, const size_t index_2)
 	t_string = declared_date[index_1];
 	declared_date[index_1] = declared_date[index_2];
 	declared_date[index_2] = t_string;
-
-	t_string = institution_name[index_1];
-	institution_name[index_1] = institution_name[index_2];
-	institution_name[index_2] = t_string;
-
-	t_string = subject_name[index_1];
-	subject_name[index_1] = subject_name[index_2];
-	subject_name[index_2] = t_string;
 
 	t_string = type[index_1];
 	type[index_1] = type[index_2];
@@ -636,6 +635,8 @@ void Source::swap(const size_t index_1, const size_t index_2)
 	t_string = pass_marks[index_1];
 	pass_marks[index_1] = pass_marks[index_2];
 	pass_marks[index_2] = t_string;
+     */
+
 }
 
 bool Source::compare_isLess(std::string str1, std::string str2)
