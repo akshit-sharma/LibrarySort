@@ -660,7 +660,9 @@ void BiggerSource::swap(size_t index_1, size_t index_2)
 	name[index_1] = name[index_2];
 	name[index_2] = t_string;
 
-    ResultsDataStructure::swap(&resultsDataStructure[index_1], &resultsDataStructure[index_2]);
+    t_resultsDataStructure = resultsDataStructure[index_1];
+    resultsDataStructure[index_1] = resultsDataStructure[index_2];
+    resultsDataStructure[index_2] = t_resultsDataStructure;
 
 }
 

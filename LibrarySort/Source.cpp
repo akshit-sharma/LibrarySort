@@ -570,7 +570,9 @@ void Source::swap(const size_t index_1, const size_t index_2)
     institution_name[index_1] = institution_name[index_2];
     institution_name[index_2] = t_string;
 
-    SchemeDataStructure::swap(&schemeDataStructure[index_1], &schemeDataStructure[index_2]);
+    t_schemeDataStructure = schemeDataStructure[index_1];
+    schemeDataStructure[index_1] = schemeDataStructure[index_2];
+    schemeDataStructure[index_2] = t_schemeDataStructure;
 
 }
 
